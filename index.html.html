@@ -1,0 +1,4294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Tài Xỉu Club — Tài Xỉu, Bầu Cua, Sexy Baccarat, Xì Dách, Mậu Binh, Tiến Lên</title>
+  <style>
+    /* =========================================================================
+       1. BASE RESET & ROYAL DARK-GOLD DESIGN TOKENS (MOBILE-FIRST MAX 460PX)
+       ========================================================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    :root {
+      --bg-outer: #030908;
+      --bg-top: #173d34;
+      --bg-mid: #0b201b;
+      --bg-bot: #05110e;
+      --gold: #facc15;
+      --gold-dark: #ca8a04;
+      --gold-border: rgba(250, 204, 21, 0.48);
+      --text-main: #f8fafc;
+      --text-teal: #99f6e4;
+      --emerald-ok: #34d399;
+      --danger: #f87171;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(250, 204, 21, 0.14) 0%, transparent 46%),
+        var(--bg-outer);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .club-shell {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      height: 100dvh;
+      max-height: 920px;
+      background:
+        radial-gradient(circle at 50% 4%, rgba(250, 204, 21, 0.16) 0%, transparent 48%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 52%, var(--bg-bot) 100%);
+      border-left: 1.5px solid rgba(250, 204, 21, 0.25);
+      border-right: 1.5px solid rgba(250, 204, 21, 0.25);
+      box-shadow: 0 0 42px rgba(0, 0, 0, 0.92), inset 0 0 0 1px rgba(250, 204, 21, 0.12);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      transition: transform 0.1s ease, filter 0.15s ease, box-shadow 0.15s ease;
+    }
+    button:active:not(:disabled) {
+      transform: translateY(1.5px);
+    }
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* =========================================================================
+       2. SCREEN ROUTING & SHARED HUD BAR
+       ========================================================================= */
+    .screen {
+      display: none;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .screen.active {
+      display: flex;
+    }
+
+    .hud-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+      padding: 8px 9px;
+      background: linear-gradient(180deg, rgba(8, 28, 24, 0.97) 0%, rgba(4, 16, 14, 0.97) 100%);
+      border-bottom: 1.5px solid var(--gold-border);
+      flex-shrink: 0;
+      z-index: 20;
+    }
+
+    .hud-left, .hud-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .btn-back {
+      padding: 6px 8px;
+      border-radius: 9px;
+      background: #10332b;
+      border: 1.5px solid #4c827b;
+      color: #e2e8f0;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .room-badge {
+      font-size: 11px;
+      font-weight: 900;
+      color: #fef08a;
+      background: rgba(250, 204, 21, 0.12);
+      border: 1px solid rgba(250, 204, 21, 0.38);
+      padding: 5px 7px;
+      border-radius: 9px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wallet-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #04120f;
+      border: 1.5px solid var(--gold);
+      color: #fef08a;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wallet-plus {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #facc15 0%, #ca8a04 100%);
+      color: #451a03;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .btn-vip-hud {
+      padding: 5px 7px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #fde047 0%, #ca8a04 100%);
+      border: 1.5px solid #fef9c3;
+      color: #451a03;
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .btn-oracle-hud {
+      display: none;
+      align-items: center;
+      gap: 3px;
+      padding: 5px 7px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #7c3aed 0%, #c026d3 55%, #f59e0b 100%);
+      border: 1.5px solid #fef08a;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 900;
+      box-shadow: 0 0 12px rgba(192, 38, 211, 0.55);
+      white-space: nowrap;
+    }
+    .btn-oracle-hud.owner-visible {
+      display: inline-flex;
+    }
+
+    .oracle-fab {
+      display: none;
+      position: absolute;
+      right: 10px;
+      top: 50px;
+      z-index: 35;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #6d28d9 0%, #be185d 100%);
+      border: 1.5px solid #facc15;
+      color: #fef08a;
+      font-size: 10px;
+      font-weight: 900;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.8), 0 0 12px rgba(250, 204, 21, 0.4);
+    }
+    .oracle-fab.owner-visible {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* =========================================================================
+       3. AUTHENTICATION SCREEN (0đ REGISTRATION + SAVED ACCOUNTS)
+       ========================================================================= */
+    .auth-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 14px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .auth-hero {
+      text-align: center;
+      background: linear-gradient(150deg, #1e4d42 0%, #0a201b 70%);
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      padding: 16px 14px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65);
+    }
+
+    .auth-kicker {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--gold);
+    }
+
+    .auth-logo {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 27px;
+      font-weight: 900;
+      color: #fef08a;
+      margin-top: 4px;
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.85);
+    }
+
+    .auth-sub {
+      font-size: 11px;
+      color: var(--text-teal);
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+
+    .auth-card {
+      background: rgba(6, 22, 18, 0.94);
+      border: 1.5px solid var(--gold-border);
+      border-radius: 18px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: #04110e;
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(250, 204, 21, 0.25);
+    }
+
+    .auth-tab {
+      padding: 9px;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--text-teal);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .auth-tab.active {
+      background: linear-gradient(180deg, #facc15 0%, #ca8a04 100%);
+      color: #451a03;
+    }
+
+    .field-grp {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .field-grp label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #fde68a;
+    }
+    .field-inp {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 11px;
+      border: 1.5px solid #4c827b;
+      background: #041310;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      outline: none;
+    }
+    .field-inp:focus {
+      border-color: var(--gold);
+    }
+
+    .btn-primary-gold {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #fde047 0%, #ca8a04 100%);
+      border: 1.5px solid #fef9c3;
+      color: #451a03;
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow: 0 5px 14px rgba(202, 138, 4, 0.45);
+    }
+
+    .auth-status-box {
+      display: none;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+      line-height: 1.35;
+    }
+    .auth-status-box.err {
+      display: block;
+      background: rgba(127, 29, 29, 0.55);
+      border: 1px solid #f87171;
+      color: #fecaca;
+    }
+    .auth-status-box.ok {
+      display: block;
+      background: rgba(6, 78, 59, 0.65);
+      border: 1px solid #34d399;
+      color: #a7f3d0;
+    }
+
+    .saved-accounts-box {
+      background: rgba(4, 15, 12, 0.85);
+      border: 1px solid rgba(250, 204, 21, 0.25);
+      border-radius: 14px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .saved-acc-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .saved-acc-chip {
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #10332b;
+      border: 1px solid #4c827b;
+      color: #fef08a;
+      font-size: 10.5px;
+      font-weight: 800;
+    }
+
+    /* =========================================================================
+       4. LOBBY SCREEN (VIP OVERVIEW CARD + 6 GAMES GRID)
+       ========================================================================= */
+    .lobby-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 10px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .profile-banner {
+      background: linear-gradient(135deg, #1b4a3f 0%, #09211c 75%);
+      border: 1.5px solid var(--gold);
+      border-radius: 16px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .user-meta-title {
+      font-size: 13.5px;
+      font-weight: 900;
+      color: #fef08a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .owner-crown-tag {
+      display: none;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #7c3aed, #db2777);
+      border: 1px solid #fef08a;
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 900;
+    }
+    .owner-crown-tag.owner-visible {
+      display: inline-block;
+    }
+
+    .user-meta-sub {
+      font-size: 10.5px;
+      color: var(--text-teal);
+      margin-top: 2px;
+    }
+
+    .btn-logout {
+      padding: 7px 10px;
+      border-radius: 10px;
+      background: #450a0a;
+      border: 1px solid #f87171;
+      color: #fecaca;
+      font-size: 10.5px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .vip-overview-card {
+      background:
+        radial-gradient(circle at 92% 15%, rgba(250, 204, 21, 0.24) 0%, transparent 55%),
+        linear-gradient(145deg, #163d34 0%, #081c18 100%);
+      border: 1.5px solid var(--gold);
+      border-radius: 16px;
+      padding: 11px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    .vip-ov-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .vip-tier-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 900;
+      color: #fef08a;
+    }
+
+    .btn-vip-detail {
+      padding: 5px 9px;
+      border-radius: 9px;
+      background: rgba(250, 204, 21, 0.16);
+      border: 1px solid var(--gold);
+      color: #fef08a;
+      font-size: 10.5px;
+      font-weight: 900;
+    }
+
+    .vip-stats-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+    }
+
+    .vip-stat-box {
+      background: rgba(4, 15, 12, 0.84);
+      border: 1px solid rgba(250, 204, 21, 0.25);
+      border-radius: 10px;
+      padding: 6px 7px;
+      text-align: center;
+    }
+    .vip-stat-box small {
+      display: block;
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--text-teal);
+    }
+    .vip-stat-box strong {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 900;
+      color: #fef08a;
+      margin-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .vip-prog-track {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: #04110e;
+      border: 1px solid rgba(250, 204, 21, 0.35);
+      overflow: hidden;
+    }
+    .vip-prog-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #eab308 0%, #fef08a 100%);
+      transition: width 0.25s ease;
+    }
+
+    .vip-prog-caption {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9.5px;
+      font-weight: 800;
+      color: #cbd5e1;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .game-tile {
+      position: relative;
+      background: linear-gradient(155deg, #1b4b40 0%, #0b241e 65%, #061411 100%);
+      border: 2px solid var(--gold-border);
+      border-radius: 18px;
+      padding: 13px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 5px;
+      box-shadow: 0 7px 16px rgba(0, 0, 0, 0.55);
+    }
+    .game-tile:hover {
+      border-color: var(--gold);
+    }
+
+    .game-tile-tag {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      font-size: 8.5px;
+      font-weight: 900;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(250, 204, 21, 0.18);
+      border: 1px solid rgba(250, 204, 21, 0.5);
+      color: #fef08a;
+    }
+
+    .game-tile-ico {
+      font-size: 32px;
+      line-height: 1;
+      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.65));
+    }
+
+    .game-tile-name {
+      font-size: 13.5px;
+      font-weight: 900;
+      color: #fef08a;
+    }
+
+    .game-tile-sub {
+      font-size: 10px;
+      color: var(--text-teal);
+      line-height: 1.25;
+    }
+
+    /* =========================================================================
+       5. SHARED GAME ROOM CONTROLS
+       ========================================================================= */
+    .room-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 10px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .phase-banner {
+      background: rgba(5, 19, 16, 0.92);
+      border: 1.5px solid var(--gold-border);
+      border-radius: 13px;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .phase-txt {
+      font-size: 11px;
+      font-weight: 900;
+      color: #fef08a;
+    }
+
+    .phase-timer {
+      background: #030e0c;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 900;
+      padding: 3px 9px;
+      border-radius: 8px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .chip-rack {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+      background: rgba(4, 15, 12, 0.88);
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid rgba(250, 204, 21, 0.28);
+    }
+
+    .chip-btn {
+      padding: 7px 3px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #164439 0%, #09211c 100%);
+      border: 1.5px solid #4c827b;
+      color: #e2e8f0;
+      font-size: 10.5px;
+      font-weight: 900;
+    }
+    .chip-btn.active {
+      background: linear-gradient(180deg, #fde047 0%, #ca8a04 100%);
+      border-color: #ffffff;
+      color: #451a03;
+      box-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
+    }
+
+    .action-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .action-row-3 {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr 0.85fr;
+      gap: 6px;
+    }
+
+    .btn-sec {
+      padding: 9px 6px;
+      border-radius: 11px;
+      background: #12382f;
+      border: 1.5px solid #4c827b;
+      color: #e2e8f0;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .btn-gold-sm {
+      padding: 9px 6px;
+      border-radius: 11px;
+      background: linear-gradient(180deg, #facc15 0%, #ca8a04 100%);
+      border: 1.5px solid #fef9c3;
+      color: #451a03;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .btn-confirm-bet {
+      padding: 9px 6px;
+      border-radius: 11px;
+      background: linear-gradient(180deg, #10b981 0%, #047857 100%);
+      border: 1.5px solid #a7f3d0;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 900;
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.45);
+    }
+
+    .stake-status-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      background: rgba(4, 15, 12, 0.88);
+      border: 1px solid rgba(250, 204, 21, 0.32);
+      border-radius: 10px;
+      padding: 6px 10px;
+      font-size: 10.5px;
+      font-weight: 900;
+      color: #fef08a;
+    }
+
+    /* =========================================================================
+       6. TÀI XỈU & BẦU CUA BOWL + SQUEEZE LID
+       ========================================================================= */
+    .bowl-stage {
+      position: relative;
+      height: 158px;
+      background:
+        radial-gradient(circle at 50% 50%, #1d5246 0%, #09211c 68%, #04100d 100%);
+      border: 2px solid var(--gold);
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.75);
+    }
+
+    .plate-ring {
+      width: 136px;
+      height: 136px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f8fafc 0%, #cbd5e1 85%, #94a3b8 100%);
+      border: 5px solid #eab308;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8), inset 0 2px 8px rgba(0, 0, 0, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      position: relative;
+    }
+
+    .plate-ring.shaking {
+      animation: shakeBowl 0.28s infinite;
+    }
+
+    @keyframes shakeBowl {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(-5px, -3px) rotate(-4deg); }
+      50% { transform: translate(5px, 3px) rotate(4deg); }
+      75% { transform: translate(-3px, 4px) rotate(-2deg); }
+    }
+
+    .dice-face {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: #ffffff;
+      border: 1.5px solid #334155;
+      color: #0f172a;
+      font-size: 16px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+    }
+    .dice-face.red-pip {
+      color: #dc2626;
+    }
+
+    .bc-icon-face {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #fef9c3;
+      border: 1.5px solid #ca8a04;
+      font-size: 21px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bowl-lid {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, #facc15 0%, #b45309 55%, #451a03 100%);
+      border: 4px solid #fef08a;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fef9c3;
+      font-size: 10.5px;
+      font-weight: 900;
+      text-align: center;
+      padding: 8px;
+      touch-action: none;
+      cursor: grab;
+      z-index: 5;
+    }
+    .bowl-lid.hidden {
+      display: none;
+    }
+
+    .tx-doors-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.8fr 1fr;
+      gap: 7px;
+    }
+
+    .bet-door {
+      background: linear-gradient(180deg, #143b32 0%, #081e19 100%);
+      border: 2px solid var(--gold-border);
+      border-radius: 14px;
+      padding: 9px 6px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .bet-door.win-glow {
+      border-color: #fef08a;
+      box-shadow: 0 0 18px rgba(250, 204, 21, 0.75);
+      background: linear-gradient(180deg, #854d0e 0%, #422006 100%);
+    }
+    .bet-door-title {
+      font-size: 13.5px;
+      font-weight: 900;
+      color: #fef08a;
+    }
+    .bet-door-odds {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: var(--text-teal);
+    }
+    .bet-door-amt {
+      margin-top: 2px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #04110e;
+      border: 1px solid rgba(250, 204, 21, 0.35);
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .bet-door-pending {
+      font-size: 9px;
+      font-weight: 900;
+      color: #34d399;
+      min-height: 12px;
+    }
+
+    .bead-strip {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      overflow-x: auto;
+      padding: 6px 8px;
+      background: rgba(4, 15, 12, 0.9);
+      border: 1px solid rgba(250, 204, 21, 0.25);
+      border-radius: 11px;
+      min-height: 36px;
+    }
+
+    .bead {
+      min-width: 24px;
+      height: 24px;
+      padding: 0 5px;
+      border-radius: 999px;
+      font-size: 9.5px;
+      font-weight: 900;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+    }
+    .bead.TAI { background: #dc2626; }
+    .bead.XIU { background: #0284c7; }
+    .bead.BAO { background: #eab308; color: #451a03; }
+    .bead.P   { background: #2563eb; }
+    .bead.B   { background: #dc2626; }
+    .bead.T   { background: #16a34a; }
+
+    .bc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    /* =========================================================================
+       7. SEXY BACCARAT TABLE, 8 DOORS, ROADMAPS & LIVE CHAT
+       ========================================================================= */
+    .bac-arena {
+      background: linear-gradient(160deg, #1b4d42 0%, #09211c 75%);
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 8px 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .bac-hands-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .bac-side-box {
+      background: rgba(4, 16, 13, 0.85);
+      border: 1.5px solid rgba(250, 204, 21, 0.32);
+      border-radius: 12px;
+      padding: 6px;
+      text-align: center;
+    }
+    .bac-side-box.player { border-color: rgba(56, 189, 248, 0.65); }
+    .bac-side-box.banker { border-color: rgba(248, 113, 113, 0.65); }
+
+    .bac-side-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .cards-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      min-height: 48px;
+    }
+
+    .playing-card {
+      width: 32px;
+      height: 46px;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      color: #0f172a;
+      font-size: 10.5px;
+      font-weight: 900;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.45);
+    }
+    .playing-card.red { color: #dc2626; }
+    .playing-card.back {
+      background: repeating-linear-gradient(45deg, #1e3a8a, #1e3a8a 4px, #1d4ed8 4px, #1d4ed8 8px);
+      border-color: #facc15;
+      color: #fef08a;
+    }
+
+    .bac-main-3 {
+      display: grid;
+      grid-template-columns: 1fr 0.78fr 1fr;
+      gap: 5px;
+    }
+
+    .bac-side-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+    }
+
+    .bac-mini-door {
+      background: #061814;
+      border: 1.5px solid rgba(250, 204, 21, 0.35);
+      border-radius: 10px;
+      padding: 5px 2px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .bac-mini-door.win-glow {
+      border-color: #fef08a;
+      background: #713f12;
+    }
+    .bac-mini-door strong {
+      font-size: 8.5px;
+      color: #fef08a;
+    }
+    .bac-mini-door small {
+      font-size: 8px;
+      color: var(--text-teal);
+    }
+    .bac-mini-door span {
+      font-size: 8.5px;
+      font-weight: 900;
+      color: var(--gold);
+    }
+
+    .road-panel-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 5px;
+    }
+
+    .big-road-grid {
+      display: grid;
+      grid-template-rows: repeat(6, 15px);
+      grid-auto-flow: column;
+      grid-auto-columns: 15px;
+      gap: 2px;
+      overflow-x: auto;
+      background: #04110e;
+      border: 1px solid rgba(250, 204, 21, 0.25);
+      border-radius: 10px;
+      padding: 4px;
+    }
+
+    .road-cell {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      font-size: 7.5px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fef08a;
+    }
+    .road-cell.P { border-color: #38bdf8; }
+    .road-cell.B { border-color: #f87171; }
+
+    .sub-road-box {
+      background: #04110e;
+      border: 1px solid rgba(250, 204, 21, 0.25);
+      border-radius: 10px;
+      padding: 5px 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 9px;
+      color: var(--text-teal);
+    }
+
+    .sub-road-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .sub-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+    .sub-dot.R { background: #f87171; }
+    .sub-dot.B { background: #38bdf8; }
+
+    .bac-chat-bar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 5px;
+    }
+
+    .bac-chat-log {
+      background: rgba(4, 15, 12, 0.88);
+      border: 1px solid rgba(250, 204, 21, 0.22);
+      border-radius: 9px;
+      padding: 5px 8px;
+      font-size: 10px;
+      color: #cbd5e1;
+      max-height: 44px;
+      overflow-y: auto;
+      line-height: 1.3;
+    }
+
+    /* =========================================================================
+       8. XÌ DÁCH, MẬU BINH, TIẾN LÊN
+       ========================================================================= */
+    .card-table-box {
+      background: linear-gradient(160deg, #19483d 0%, #081e19 80%);
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hand-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      min-height: 52px;
+    }
+
+    .tl-card {
+      width: 36px;
+      height: 52px;
+      border-radius: 7px;
+      background: #ffffff;
+      border: 1.5px solid #94a3b8;
+      color: #0f172a;
+      font-size: 11.5px;
+      font-weight: 900;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .tl-card.red { color: #dc2626; }
+    .tl-card.selected {
+      transform: translateY(-7px);
+      border-color: #eab308;
+      box-shadow: 0 0 10px rgba(250, 204, 21, 0.85);
+      background: #fef9c3;
+    }
+
+    /* =========================================================================
+       9. MODALS: DEPOSIT (2-STEP), VIP 0-8, AND OWNER-ONLY ORACLE
+       ========================================================================= */
+    .modal-backdrop {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(2, 8, 7, 0.85);
+      backdrop-filter: blur(4px);
+      z-index: 60;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 10px;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      max-height: 90dvh;
+      background: linear-gradient(180deg, #173e35 0%, #071915 100%);
+      border: 2px solid var(--gold);
+      border-radius: 20px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      overflow-y: auto;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.92);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px solid rgba(250, 204, 21, 0.28);
+      padding-bottom: 7px;
+    }
+
+    .modal-title {
+      font-size: 13.5px;
+      font-weight: 900;
+      color: #fef08a;
+    }
+
+    .btn-close-modal {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #450a0a;
+      border: 1px solid #f87171;
+      color: #fecaca;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .dep-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .dep-pkg {
+      padding: 12px 8px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #133930 0%, #071c17 100%);
+      border: 1.5px solid var(--gold-border);
+      color: #fef08a;
+      font-size: 12.5px;
+      font-weight: 900;
+    }
+    .dep-pkg:hover {
+      border-color: var(--gold);
+    }
+
+    .vip-game-breakdown {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
+    }
+    .vip-g-item {
+      background: #04120f;
+      border: 1px solid rgba(250, 204, 21, 0.25);
+      border-radius: 9px;
+      padding: 6px 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .vip-tier-row {
+      background: #051612;
+      border: 1px solid rgba(250, 204, 21, 0.22);
+      border-radius: 10px;
+      padding: 7px 9px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 10px;
+    }
+    .vip-tier-row.current {
+      border-color: var(--gold);
+      background: rgba(250, 204, 21, 0.14);
+    }
+
+    .oracle-sheet {
+      border-color: #facc15;
+      background:
+        radial-gradient(circle at 85% 5%, rgba(192, 38, 211, 0.25) 0%, transparent 45%),
+        linear-gradient(180deg, #1d1b4b 0%, #091d19 42%, #05110f 100%);
+    }
+
+    .oracle-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: #040d0b;
+      padding: 4px;
+      border-radius: 11px;
+      border: 1px solid rgba(250, 204, 21, 0.35);
+    }
+
+    .oracle-tab-btn {
+      padding: 8px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-teal);
+      font-size: 11.5px;
+      font-weight: 900;
+    }
+    .oracle-tab-btn.active {
+      background: linear-gradient(180deg, #facc15 0%, #ca8a04 100%);
+      color: #451a03;
+    }
+
+    .oracle-panel {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .oracle-panel.active {
+      display: flex;
+    }
+
+    .oracle-live-box {
+      background: rgba(5, 16, 24, 0.92);
+      border: 2px solid #facc15;
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .oracle-verdict {
+      font-size: 17.5px;
+      font-weight: 900;
+      color: #fef08a;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+    }
+
+    .oracle-force-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+    }
+
+    .btn-force {
+      padding: 7px 4px;
+      border-radius: 8px;
+      background: #172554;
+      border: 1px solid #60a5fa;
+      color: #eff6ff;
+      font-size: 10px;
+      font-weight: 900;
+    }
+    .btn-force.active {
+      background: linear-gradient(180deg, #facc15 0%, #ca8a04 100%);
+      color: #451a03;
+      border-color: #ffffff;
+    }
+
+    .toast-bar {
+      position: absolute;
+      top: 52px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-16px);
+      background: rgba(6, 24, 20, 0.96);
+      border: 1.5px solid var(--gold);
+      color: #fef08a;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 7px 13px;
+      border-radius: 999px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.85);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 95;
+      white-space: nowrap;
+      max-width: 92%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .toast-bar.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="club-shell">
+    <div id="toastBar" class="toast-bar"></div>
+
+    <!-- =====================================================================
+         SCREEN 0: AUTHENTICATION (0đ REGISTRATION + SAVED ACCOUNTS)
+         ===================================================================== -->
+    <section id="screenAuth" class="screen active">
+      <div class="auth-scroll">
+        <div class="auth-hero">
+          <div class="auth-kicker">ROYAL CASINO PORTAL • 6 IN 1</div>
+          <h1 class="auth-logo">TÀI XỈU CLUB</h1>
+          <p class="auth-sub">
+            Tài Xỉu • Bầu Cua • Sexy Baccarat • Xì Dách • Mậu Binh • Tiến Lên<br />
+            1 Ví Chung • VIP 0–8 Tích Lũy Toàn Sảnh
+          </p>
+        </div>
+
+        <form id="authForm" class="auth-card" novalidate>
+          <div class="auth-tabs">
+            <button type="button" id="authTabLogin" class="auth-tab active">Đăng Nhập</button>
+            <button type="button" id="authTabReg" class="auth-tab">Đăng Ký</button>
+          </div>
+
+          <div class="field-grp">
+            <label for="authUserInp">Tên tài khoản</label>
+            <input id="authUserInp" class="field-inp" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="Nhập tên tài khoản..." />
+          </div>
+
+          <div class="field-grp">
+            <label for="authPassInp">Mật khẩu</label>
+            <input id="authPassInp" class="field-inp" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu..." />
+          </div>
+
+          <div id="authStatusBox" class="auth-status-box"></div>
+
+          <button type="submit" id="authSubmitBtn" class="btn-primary-gold">
+            ĐĂNG NHẬP VÀO SẢNH
+          </button>
+        </form>
+
+        <div id="savedAccountsWrap" class="saved-accounts-box" style="display:none;">
+          <div style="font-size:10px;font-weight:900;color:#fde68a;">Tài khoản đã lưu trên thiết bị (bấm để điền nhanh):</div>
+          <div id="savedAccountsList" class="saved-acc-chips"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SCREEN 1: MAIN LOBBY (SẢNH CHÍNH)
+         ===================================================================== -->
+    <section id="screenLobby" class="screen">
+      <header class="hud-bar">
+        <div class="hud-left">
+          <span class="room-badge">🏛️ SẢNH CHÍNH</span>
+        </div>
+        <div class="hud-right">
+          <button type="button" class="btn-oracle-hud js-owner-only" onclick="openOwnerOracle()">🔮 Soi Cầu</button>
+          <button type="button" class="btn-vip-hud" onclick="openVipModal()">👑 <span id="hudVipLbl">VIP 0</span></button>
+          <button type="button" class="wallet-chip" onclick="openDepositModal()">
+            <span id="hudBalLobby">0đ</span>
+            <span class="wallet-plus">+</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="lobby-scroll">
+        <div class="profile-banner">
+          <div>
+            <div class="user-meta-title">
+              <span id="lobbyUserName">Khách</span>
+              <span class="owner-crown-tag js-owner-only">👑 CHỦ PHÒNG</span>
+            </div>
+            <div class="user-meta-sub">Ví chung 6 game • Bảo vệ số dư tự động</div>
+          </div>
+          <button type="button" class="btn-logout" onclick="logoutAccount()">Đăng xuất</button>
+        </div>
+
+        <!-- VIP 0-8 Summary Card -->
+        <div class="vip-overview-card">
+          <div class="vip-ov-top">
+            <div class="vip-tier-pill">
+              <span>👑</span>
+              <span id="lobbyVipTitle">VIP 0 — Tân Thủ</span>
+            </div>
+            <button type="button" class="btn-vip-detail" onclick="openVipModal()">Chi tiết VIP &amp; Thưởng →</button>
+          </div>
+
+          <div class="vip-stats-3">
+            <div class="vip-stat-box">
+              <small>Tổng Nạp</small>
+              <strong id="lobbyTotalDep">0đ</strong>
+            </div>
+            <div class="vip-stat-box">
+              <small>Tổng Cược 6 Game</small>
+              <strong id="lobbyTotalBet">0đ</strong>
+            </div>
+            <div class="vip-stat-box">
+              <small>Tổng Tích Lũy VIP</small>
+              <strong id="lobbyVipPts">0đ</strong>
+            </div>
+          </div>
+
+          <div class="vip-prog-track">
+            <div id="lobbyVipFill" class="vip-prog-fill"></div>
+          </div>
+          <div class="vip-prog-caption">
+            <span id="lobbyVipNextTxt">Cần thêm 500,000đ lên VIP 1</span>
+            <span id="lobbyVipPctTxt">0%</span>
+          </div>
+        </div>
+
+        <!-- 6 Game Tiles -->
+        <div class="games-grid">
+          <button type="button" class="game-tile" onclick="openGameRoom('taixiu')">
+            <span class="game-tile-tag">15s • 10s • 3s</span>
+            <span class="game-tile-ico">🎲</span>
+            <span class="game-tile-name">TÀI XỈU</span>
+            <span class="game-tile-sub">Nặn hũ kéo tay • Tài/Xỉu/Bão 1:24</span>
+          </button>
+
+          <button type="button" class="game-tile" onclick="openGameRoom('baucua')">
+            <span class="game-tile-tag">6 LINH VẬT</span>
+            <span class="game-tile-ico">🦀</span>
+            <span class="game-tile-name">BẦU CUA</span>
+            <span class="game-tile-sub">Xóc đĩa dân gian • Nặn hũ 3 mặt</span>
+          </button>
+
+          <button type="button" class="game-tile" onclick="openGameRoom('baccarat')">
+            <span class="game-tile-tag">8 CỬA • ROAD</span>
+            <span class="game-tile-ico">💃</span>
+            <span class="game-tile-name">SEXY BACCARAT</span>
+            <span class="game-tile-sub">Bot lật bài • Long Hổ Đấu 1:100</span>
+          </button>
+
+          <button type="button" class="game-tile" onclick="openGameRoom('xidach')">
+            <span class="game-tile-tag">NGŨ LINH</span>
+            <span class="game-tile-ico">🃏</span>
+            <span class="game-tile-name">XÌ DÁCH</span>
+            <span class="game-tile-sub">Đấu Nhà Cái • Xì Dách &amp; Xì Bàng</span>
+          </button>
+
+          <button type="button" class="game-tile" onclick="openGameRoom('maubinh')">
+            <span class="game-tile-tag">13 LÁ • 3 CHI</span>
+            <span class="game-tile-ico">🀄</span>
+            <span class="game-tile-name">MẬU BINH</span>
+            <span class="game-tile-sub">Xếp 3 chi 5-5-3 • So bài 3 nhà</span>
+          </button>
+
+          <button type="button" class="game-tile" onclick="openGameRoom('tienlen')">
+            <span class="game-tile-tag">ĐẤU 3 BOT</span>
+            <span class="game-tile-ico">♠️</span>
+            <span class="game-tile-name">TIẾN LÊN</span>
+            <span class="game-tile-sub">Chặt Heo • Tứ Quý • Xả bài nhanh</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SCREEN 2: TÀI XỈU (15s LẮC -> 10s NẶN HŨ -> 3s SANG PHIÊN)
+         ===================================================================== -->
+    <section id="screenTaixiu" class="screen">
+      <header class="hud-bar">
+        <div class="hud-left">
+          <button type="button" class="btn-back" onclick="backToLobby()">← Sảnh</button>
+          <span class="room-badge">🎲 TÀI XỈU</span>
+        </div>
+        <div class="hud-right">
+          <button type="button" class="btn-oracle-hud js-owner-only" onclick="openOwnerOracle('tx')">🔮 Soi Cầu</button>
+          <button type="button" class="btn-vip-hud" onclick="openVipModal()">👑 VIP</button>
+          <button type="button" class="wallet-chip" onclick="openDepositModal()">
+            <span id="hudBalTx">0đ</span>
+            <span class="wallet-plus">+</span>
+          </button>
+        </div>
+      </header>
+
+      <button type="button" class="oracle-fab js-owner-only" onclick="openOwnerOracle('tx')">🔮 Soi Phiên TX</button>
+
+      <div class="room-body">
+        <div class="phase-banner">
+          <span id="txPhaseTxt" class="phase-txt">Lắc &amp; Đặt cược (15s)</span>
+          <span id="txTimerTxt" class="phase-timer">15.0s</span>
+        </div>
+
+        <div class="bowl-stage">
+          <div id="txPlate" class="plate-ring">
+            <div id="txDie1" class="dice-face">?</div>
+            <div id="txDie2" class="dice-face">?</div>
+            <div id="txDie3" class="dice-face">?</div>
+            <div id="txBowlLid" class="bowl-lid hidden">
+              <span>NẶN HŨ 10s</span>
+              <small style="font-size:8.5px;opacity:0.9;">Kéo hũ hoặc bấm Mở Nhanh</small>
+            </div>
+          </div>
+          <div id="txResultBanner" style="margin-top:6px;font-size:11.5px;font-weight:900;color:#fef08a;">
+            Chọn cửa rồi bấm ✓ XÁC NHẬN CƯỢC
+          </div>
+        </div>
+
+        <div class="tx-doors-grid">
+          <button type="button" id="txDoorTai" class="bet-door" onclick="placeTxBet('TAI')">
+            <span class="bet-door-title">TÀI</span>
+            <span class="bet-door-odds">11–17 • 1:1</span>
+            <span id="txBetTai" class="bet-door-amt">Đã chốt: 0đ</span>
+            <span id="txPendTai" class="bet-door-pending"></span>
+          </button>
+          <button type="button" id="txDoorBao" class="bet-door" onclick="placeTxBet('BAO')">
+            <span class="bet-door-title">BÃO</span>
+            <span class="bet-door-odds">3 mặt • 1:24</span>
+            <span id="txBetBao" class="bet-door-amt">Đã chốt: 0đ</span>
+            <span id="txPendBao" class="bet-door-pending"></span>
+          </button>
+          <button type="button" id="txDoorXiu" class="bet-door" onclick="placeTxBet('XIU')">
+            <span class="bet-door-title">XỈU</span>
+            <span class="bet-door-odds">4–10 • 1:1</span>
+            <span id="txBetXiu" class="bet-door-amt">Đã chốt: 0đ</span>
+            <span id="txPendXiu" class="bet-door-pending"></span>
+          </button>
+        </div>
+
+        <div class="chip-rack" data-chip-rack="tx"></div>
+
+        <div class="action-row-2">
+          <button type="button" class="btn-sec" onclick="clearTxBets()">Hủy cược tạm</button>
+          <button type="button" id="btnTxMainAction" class="btn-confirm-bet" onclick="handleTxMainAction()">✓ XÁC NHẬN CƯỢC</button>
+        </div>
+
+        <div id="txBeadStrip" class="bead-strip"></div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SCREEN 3: BẦU CUA (15s XÓC -> 10s NẶN HŨ -> 3s SANG PHIÊN)
+         ===================================================================== -->
+    <section id="screenBaucua" class="screen">
+      <header class="hud-bar">
+        <div class="hud-left">
+          <button type="button" class="btn-back" onclick="backToLobby()">← Sảnh</button>
+          <span class="room-badge">🦀 BẦU CUA</span>
+        </div>
+        <div class="hud-right">
+          <button type="button" class="btn-vip-hud" onclick="openVipModal()">👑 VIP</button>
+          <button type="button" class="wallet-chip" onclick="openDepositModal()">
+            <span id="hudBalBc">0đ</span>
+            <span class="wallet-plus">+</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="room-body">
+        <div class="phase-banner">
+          <span id="bcPhaseTxt" class="phase-txt">Xóc &amp; Đặt cược (15s)</span>
+          <span id="bcTimerTxt" class="phase-timer">15.0s</span>
+        </div>
+
+        <div class="bowl-stage" style="height:134px;">
+          <div id="bcPlate" class="plate-ring" style="width:122px;height:122px;">
+            <div id="bcFace1" class="bc-icon-face">🎃</div>
+            <div id="bcFace2" class="bc-icon-face">🦀</div>
+            <div id="bcFace3" class="bc-icon-face">🦐</div>
+            <div id="bcBowlLid" class="bowl-lid hidden">
+              <span>NẶN HŨ BẦU CUA</span>
+              <small style="font-size:8.5px;">Bấm Mở Nhanh</small>
+            </div>
+          </div>
+          <div id="bcResultBanner" style="margin-top:4px;font-size:11px;font-weight:900;color:#fef08a;">
+            Chọn linh vật rồi bấm ✓ XÁC NHẬN CƯỢC
+          </div>
+        </div>
+
+        <div class="bc-grid" id="bcDoorsGrid"></div>
+
+        <div class="chip-rack" data-chip-rack="bc"></div>
+
+        <div class="action-row-2">
+          <button type="button" class="btn-sec" onclick="clearBcBets()">Hủy cược tạm</button>
+          <button type="button" id="btnBcMainAction" class="btn-confirm-bet" onclick="handleBcMainAction()">✓ XÁC NHẬN CƯỢC</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SCREEN 4: SEXY BACCARAT (15s CƯỢC -> BOT LẬT BÀI -> 4s CHỜ)
+         ===================================================================== -->
+    <section id="screenBaccarat" class="screen">
+      <header class="hud-bar">
+        <div class="hud-left">
+          <button type="button" class="btn-back" onclick="backToLobby()">← Sảnh</button>
+          <span class="room-badge">💃 SEXY BACCARAT</span>
+        </div>
+        <div class="hud-right">
+          <button type="button" class="btn-oracle-hud js-owner-only" onclick="openOwnerOracle('bac')">🔮 Soi Cầu</button>
+          <button type="button" class="btn-vip-hud" onclick="openVipModal()">👑 VIP</button>
+          <button type="button" class="wallet-chip" onclick="openDepositModal()">
+            <span id="hudBalBac">0đ</span>
+            <span class="wallet-plus">+</span>
+          </button>
+        </div>
+      </header>
+
+      <button type="button" class="oracle-fab js-owner-only" onclick="openOwnerOracle('bac')">🔮 Soi Ván Baccarat</button>
+
+      <div class="room-body">
+        <div class="phase-banner">
+          <span id="bacPhaseTxt" class="phase-txt">Nhận cược (15s)</span>
+          <span id="bacTimerTxt" class="phase-timer">15.0s</span>
+        </div>
+
+        <div class="bac-arena">
+          <div class="bac-hands-row">
+            <div class="bac-side-box player">
+              <div class="bac-side-head">
+                <span style="color:#38bdf8;">TAY CON (P)</span>
+                <span id="bacPlayerPts" style="color:#fef08a;">? điểm</span>
+              </div>
+              <div id="bacPlayerCards" class="cards-row"></div>
+            </div>
+
+            <div class="bac-side-box banker">
+              <div class="bac-side-head">
+                <span style="color:#f87171;">NHÀ CÁI (B)</span>
+                <span id="bacBankerPts" style="color:#fef08a;">? điểm</span>
+              </div>
+              <div id="bacBankerCards" class="cards-row"></div>
+            </div>
+          </div>
+
+          <div id="bacResultBanner" style="text-align:center;font-size:11px;font-weight:900;color:#fef08a;">
+            Chọn cửa cược rồi bấm ✓ XÁC NHẬN CƯỢC
+          </div>
+        </div>
+
+        <!-- 3 Main Doors -->
+        <div class="bac-main-3">
+          <button type="button" id="bacDoorPLAYER" class="bet-door" onclick="placeBacBet('PLAYER')">
+            <span class="bet-door-title" style="color:#38bdf8;">TAY CON</span>
+            <span class="bet-door-odds">1:1</span>
+            <span id="bacBetPLAYER" class="bet-door-amt">Chốt: 0đ</span>
+            <span id="bacPendPLAYER" class="bet-door-pending"></span>
+          </button>
+          <button type="button" id="bacDoorTIE" class="bet-door" onclick="placeBacBet('TIE')">
+            <span class="bet-door-title" style="color:#4ade80;">HÒA</span>
+            <span class="bet-door-odds">1:8</span>
+            <span id="bacBetTIE" class="bet-door-amt">Chốt: 0đ</span>
+            <span id="bacPendTIE" class="bet-door-pending"></span>
+          </button>
+          <button type="button" id="bacDoorBANKER" class="bet-door" onclick="placeBacBet('BANKER')">
+            <span class="bet-door-title" style="color:#f87171;">NHÀ CÁI</span>
+            <span id="bacBankerOddsLbl" class="bet-door-odds">1:0.95</span>
+            <span id="bacBetBANKER" class="bet-door-amt">Chốt: 0đ</span>
+            <span id="bacPendBANKER" class="bet-door-pending"></span>
+          </button>
+        </div>
+
+        <!-- 5 Dragon / Tiger Side Doors -->
+        <div class="bac-side-5">
+          <button type="button" id="bacDoorTIEU_LONG" class="bac-mini-door" onclick="placeBacBet('TIEU_LONG')">
+            <strong>Tiểu Long</strong>
+            <small>1:15</small>
+            <span id="bacBetTIEU_LONG">0</span>
+            <span id="bacPendTIEU_LONG" style="font-size:7.5px;color:#34d399;"></span>
+          </button>
+          <button type="button" id="bacDoorDAI_LONG" class="bac-mini-door" onclick="placeBacBet('DAI_LONG')">
+            <strong>Đại Long</strong>
+            <small>1:30</small>
+            <span id="bacBetDAI_LONG">0</span>
+            <span id="bacPendDAI_LONG" style="font-size:7.5px;color:#34d399;"></span>
+          </button>
+          <button type="button" id="bacDoorLONG_HO_DAU" class="bac-mini-door" onclick="placeBacBet('LONG_HO_DAU')">
+            <strong>Long Hổ</strong>
+            <small>1:100</small>
+            <span id="bacBetLONG_HO_DAU">0</span>
+            <span id="bacPendLONG_HO_DAU" style="font-size:7.5px;color:#34d399;"></span>
+          </button>
+          <button type="button" id="bacDoorDAI_HO" class="bac-mini-door" onclick="placeBacBet('DAI_HO')">
+            <strong>Đại Hổ</strong>
+            <small>1:50</small>
+            <span id="bacBetDAI_HO">0</span>
+            <span id="bacPendDAI_HO" style="font-size:7.5px;color:#34d399;"></span>
+          </button>
+          <button type="button" id="bacDoorTIEU_HO" class="bac-mini-door" onclick="placeBacBet('TIEU_HO')">
+            <strong>Tiểu Hổ</strong>
+            <small>1:22</small>
+            <span id="bacBetTIEU_HO">0</span>
+            <span id="bacPendTIEU_HO" style="font-size:7.5px;color:#34d399;"></span>
+          </button>
+        </div>
+
+        <div class="chip-rack" data-chip-rack="bac"></div>
+
+        <div class="action-row-3">
+          <button type="button" id="btnBacConfirm" class="btn-confirm-bet" onclick="confirmBacBets()">✓ XÁC NHẬN CƯỢC</button>
+          <button type="button" id="btnBacComm" class="btn-sec" style="font-size:10px;" onclick="toggleBacNoComm()">Có Hoa Hồng</button>
+          <button type="button" class="btn-gold-sm" style="font-size:10.5px;" onclick="clearBacBets()">Hủy tạm</button>
+        </div>
+
+        <!-- Roadmaps: Big Road + Sub Roads + Bead Road -->
+        <div class="road-panel-grid">
+          <div id="bacBigRoad" class="big-road-grid"></div>
+          <div class="sub-road-box">
+            <div style="font-weight:900;color:#fef08a;">Sub Roads (Cầu Phụ)</div>
+            <div id="bacSubRoads" class="sub-road-dots"></div>
+            <div id="bacRoadCountTxt" style="font-size:8.5px;">P: 0 • B: 0 • T: 0</div>
+          </div>
+        </div>
+        <div id="bacBeadStrip" class="bead-strip"></div>
+
+        <!-- Table Live Chat -->
+        <div class="bac-chat-log" id="bacChatLog">
+          <div><b style="color:#facc15;">Dealer Sexy:</b> Chào mừng quý khách đến bàn Baccarat VIP!</div>
+        </div>
+        <div class="bac-chat-bar">
+          <input id="bacChatInp" class="field-inp" style="padding:7px 9px;font-size:11px;" type="text" placeholder="Nhắn tin bàn Baccarat..." />
+          <button type="button" class="btn-gold-sm" style="padding:7px 11px;" onclick="sendBacChat()">Gửi</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SCREEN 5: XÌ DÁCH
+         ===================================================================== -->
+    <section id="screenXidach" class="screen">
+      <header class="hud-bar">
+        <div class="hud-left">
+          <button type="button" class="btn-back" onclick="backToLobby()">← Sảnh</button>
+          <span class="room-badge">🃏 XÌ DÁCH</span>
+        </div>
+        <div class="hud-right">
+          <button type="button" class="btn-vip-hud" onclick="openVipModal()">👑 VIP</button>
+          <button type="button" class="wallet-chip" onclick="openDepositModal()">
+            <span id="hudBalXd">0đ</span>
+            <span class="wallet-plus">+</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="room-body">
+        <div class="card-table-box">
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:900;">
+            <span style="color:#fca5a5;">NHÀ CÁI</span>
+            <span id="xdDealerPts" style="color:#fef08a;">? điểm</span>
+          </div>
+          <div id="xdDealerCards" class="hand-wrap"></div>
+
+          <div id="xdStatusTxt" style="text-align:center;font-size:11.5px;font-weight:900;color:#fef08a;padding:4px 0;">
+            Chọn phỉnh, bấm ✓ XÁC NHẬN CƯỢC rồi bấm Chia Bài
+          </div>
+
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:900;">
+            <span style="color:#7dd3fc;">BÀI CỦA BẠN</span>
+            <span id="xdPlayerPts" style="color:#fef08a;">0 điểm</span>
+          </div>
+          <div id="xdPlayerCards" class="hand-wrap"></div>
+        </div>
+
+        <div class="stake-status-pill">
+          <span id="xdStakeLabel">Cược đã xác nhận: 0đ</span>
+          <span id="xdChipPreview" style="color:#99f6e4;">Phỉnh chọn: 10.000đ</span>
+        </div>
+
+        <div class="chip-rack" data-chip-rack="xd"></div>
+
+        <div class="action-row-3">
+          <button type="button" id="btnXdConfirm" class="btn-confirm-bet" onclick="confirmXidachStake()">✓ XÁC NHẬN CƯỢC</button>
+          <button type="button" id="btnXdDeal" class="btn-gold-sm" onclick="startXidachRound()">Chia Bài</button>
+          <button type="button" id="btnXdHit" class="btn-sec" onclick="hitXidachCard()" disabled>Rút Thêm</button>
+        </div>
+        <button type="button" id="btnXdStand" class="btn-primary-gold" onclick="standXidachRound()" disabled>Dừng &amp; So Bài</button>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SCREEN 6: MẬU BINH (13 LÁ • 3 CHI)
+         ===================================================================== -->
+    <section id="screenMaubinh" class="screen">
+      <header class="hud-bar">
+        <div class="hud-left">
+          <button type="button" class="btn-back" onclick="backToLobby()">← Sảnh</button>
+          <span class="room-badge">🀄 MẬU BINH</span>
+        </div>
+        <div class="hud-right">
+          <button type="button" class="btn-vip-hud" onclick="openVipModal()">👑 VIP</button>
+          <button type="button" class="wallet-chip" onclick="openDepositModal()">
+            <span id="hudBalMb">0đ</span>
+            <span class="wallet-plus">+</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="room-body">
+        <div class="card-table-box">
+          <div id="mbStatusTxt" style="text-align:center;font-size:11.5px;font-weight:900;color:#fef08a;">
+            Chọn phỉnh, bấm ✓ XÁC NHẬN CƯỢC rồi Chia 13 Lá
+          </div>
+
+          <div style="font-size:10px;font-weight:900;color:#99f6e4;">CHI ĐẦU (5 LÁ): <span id="mbChi1Rank">-</span></div>
+          <div id="mbChi1Cards" class="hand-wrap"></div>
+
+          <div style="font-size:10px;font-weight:900;color:#99f6e4;">CHI GIỮA (5 LÁ): <span id="mbChi2Rank">-</span></div>
+          <div id="mbChi2Cards" class="hand-wrap"></div>
+
+          <div style="font-size:10px;font-weight:900;color:#99f6e4;">CHI CUỐI (3 LÁ): <span id="mbChi3Rank">-</span></div>
+          <div id="mbChi3Cards" class="hand-wrap"></div>
+        </div>
+
+        <div class="stake-status-pill">
+          <span id="mbStakeLabel">Cược đã xác nhận: 0đ</span>
+          <span id="mbChipPreview" style="color:#99f6e4;">Phỉnh chọn: 10.000đ</span>
+        </div>
+
+        <div class="chip-rack" data-chip-rack="mb"></div>
+
+        <div class="action-row-3">
+          <button type="button" id="btnMbConfirm" class="btn-confirm-bet" onclick="confirmMaubinhStake()">✓ XÁC NHẬN CƯỢC</button>
+          <button type="button" id="btnMbDeal" class="btn-gold-sm" onclick="dealMaubinhRound()">Chia 13 Lá</button>
+          <button type="button" id="btnMbSwap" class="btn-sec" onclick="swapMaubinhBranches()" disabled>Xếp Lại Chi</button>
+        </div>
+        <button type="button" id="btnMbCompare" class="btn-primary-gold" onclick="compareMaubinhRound()" disabled>Binh Xong &amp; So Bài</button>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SCREEN 7: TIẾN LÊN (ĐẤU 3 BOT)
+         ===================================================================== -->
+    <section id="screenTienlen" class="screen">
+      <header class="hud-bar">
+        <div class="hud-left">
+          <button type="button" class="btn-back" onclick="backToLobby()">← Sảnh</button>
+          <span class="room-badge">♠️ TIẾN LÊN</span>
+        </div>
+        <div class="hud-right">
+          <button type="button" class="btn-vip-hud" onclick="openVipModal()">👑 VIP</button>
+          <button type="button" class="wallet-chip" onclick="openDepositModal()">
+            <span id="hudBalTl">0đ</span>
+            <span class="wallet-plus">+</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="room-body">
+        <div class="card-table-box">
+          <div style="display:flex;justify-content:space-between;font-size:10.5px;font-weight:900;color:#99f6e4;">
+            <span id="tlBot1Cnt">Bot 1: 13 lá</span>
+            <span id="tlBot2Cnt">Bot 2: 13 lá</span>
+            <span id="tlBot3Cnt">Bot 3: 13 lá</span>
+          </div>
+
+          <div id="tlStatusTxt" style="text-align:center;font-size:11.5px;font-weight:900;color:#fef08a;">
+            Chọn phỉnh, bấm ✓ XÁC NHẬN CƯỢC rồi bấm Ván Mới
+          </div>
+
+          <div style="text-align:center;font-size:10px;color:#cbd5e1;">BÀI TRÊN BÀN:</div>
+          <div id="tlTableCards" class="hand-wrap"></div>
+
+          <div style="font-size:10.5px;font-weight:900;color:#fde047;">BÀI TRÊN TAY (chạm chọn lá):</div>
+          <div id="tlPlayerCards" class="hand-wrap"></div>
+        </div>
+
+        <div class="stake-status-pill">
+          <span id="tlStakeLabel">Cược đã xác nhận: 0đ</span>
+          <span id="tlChipPreview" style="color:#99f6e4;">Phỉnh chọn: 10.000đ</span>
+        </div>
+
+        <div class="chip-rack" data-chip-rack="tl"></div>
+
+        <div class="action-row-3">
+          <button type="button" id="btnTlConfirm" class="btn-confirm-bet" onclick="confirmTienlenStake()">✓ XÁC NHẬN CƯỢC</button>
+          <button type="button" id="btnTlNew" class="btn-gold-sm" onclick="startTienlenRound()">Ván Mới</button>
+          <button type="button" id="btnTlAuto" class="btn-sec" onclick="autoSelectTienlenMove()" disabled>Tự Đánh</button>
+        </div>
+        <div class="action-row-2">
+          <button type="button" id="btnTlPass" class="btn-sec" onclick="passTienlenTurn()" disabled>Bỏ Lượt</button>
+          <button type="button" id="btnTlPlay" class="btn-primary-gold" onclick="playSelectedTienlenCards()" disabled>Đánh Bài</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         MODAL 1: 2-STEP DEPOSIT WITH MANDATORY SECRET PASSCODE VERIFICATION
+         ===================================================================== -->
+    <div id="modalDeposit" class="modal-backdrop" onclick="if(event.target===this) closeModal('modalDeposit')">
+      <div class="modal-sheet">
+        <div class="modal-head">
+          <span class="modal-title">💎 Nạp Tiền Ví Chung (Yêu Cầu Mã Xác Thực)</span>
+          <button type="button" class="btn-close-modal" onclick="closeModal('modalDeposit')">✕</button>
+        </div>
+
+        <!-- STEP 1: CHOOSE DENOMINATION -->
+        <div id="depStep1">
+          <div style="font-size:11px;font-weight:800;color:#99f6e4;margin-bottom:7px;">
+            Bước 1: Chọn gói mệnh giá cần nạp (hệ thống sẽ yêu cầu mã xác thực ở bước 2):
+          </div>
+          <div class="dep-grid">
+            <button type="button" class="dep-pkg" onclick="selectDepositTier(10000)">10.000đ</button>
+            <button type="button" class="dep-pkg" onclick="selectDepositTier(20000)">20.000đ</button>
+            <button type="button" class="dep-pkg" onclick="selectDepositTier(50000)">50.000đ</button>
+            <button type="button" class="dep-pkg" onclick="selectDepositTier(100000)">100.000đ</button>
+            <button type="button" class="dep-pkg" onclick="selectDepositTier(200000)">200.000đ</button>
+            <button type="button" class="dep-pkg" onclick="selectDepositTier(500000)">500.000đ</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: ENTER EXACT SECRET PASSCODE -->
+        <div id="depStep2" style="display:none;flex-direction:column;gap:9px;">
+          <div style="background:rgba(4,16,13,0.9);border:1.5px solid var(--gold);border-radius:12px;padding:9px 11px;">
+            <div style="font-size:10px;font-weight:900;color:#99f6e4;">GÓI NẠP ĐÃ CHN (BƯỚC 2/2)</div>
+            <div id="depSelectedTierTitle" style="font-size:16px;font-weight:900;color:#fef08a;margin-top:2px;">10.000đ</div>
+            <div style="font-size:10px;color:#cbd5e1;margin-top:2px;">Nhập đúng mã kích hoạt riêng của gói mệnh giá này để cộng tiền vào ví.</div>
+          </div>
+
+          <div class="field-grp">
+            <label for="depCodeInp">Nhập mã kích hoạt gói nạp:</label>
+            <input id="depCodeInp" class="field-inp" type="text" autocomplete="off" autocapitalize="none" placeholder="Nhập mã bí mật..." />
+          </div>
+
+          <div id="depErrTxt" class="auth-status-box"></div>
+
+          <div class="action-row-2">
+            <button type="button" class="btn-sec" onclick="backToDepositStep1()">← Đổi gói nạp</button>
+            <button type="button" class="btn-confirm-bet" onclick="verifyAndCompleteDeposit()">XÁC NHẬN NẠP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 2: VIP 0-8 SYSTEM (AGGREGATING DEPOSITS + ALL 6 GAMES WAGERS)
+         ===================================================================== -->
+    <div id="modalVip" class="modal-backdrop" onclick="if(event.target===this) closeModal('modalVip')">
+      <div class="modal-sheet">
+        <div class="modal-head">
+          <span class="modal-title">👑 Đặc Quyền VIP 0–8 (Gộp Nạp + Cược 6 Game)</span>
+          <button type="button" class="btn-close-modal" onclick="closeModal('modalVip')">✕</button>
+        </div>
+
+        <div class="vip-stats-3">
+          <div class="vip-stat-box">
+            <small>Tổng Nạp</small>
+            <strong id="vipModalDep">0đ</strong>
+          </div>
+          <div class="vip-stat-box">
+            <small>Tổng Cược 6 Game</small>
+            <strong id="vipModalBet">0đ</strong>
+          </div>
+          <div class="vip-stat-box">
+            <small>Tổng Điểm VIP</small>
+            <strong id="vipModalTotal">0đ</strong>
+          </div>
+        </div>
+
+        <div class="vip-prog-track">
+          <div id="vipModalFill" class="vip-prog-fill"></div>
+        </div>
+        <div class="vip-prog-caption">
+          <span id="vipModalNextTxt">-</span>
+          <span id="vipModalPctTxt">0%</span>
+        </div>
+
+        <div style="font-size:10.5px;font-weight:900;color:#fde047;">Tổng cược đóng góp theo từng trò chơi (6 game):</div>
+        <div id="vipGameBreakdown" class="vip-game-breakdown"></div>
+
+        <div class="action-row-2">
+          <button type="button" id="btnClaimRankBonus" class="btn-gold-sm" onclick="claimVipRankBonus()">Nhận Thưởng Cấp</button>
+          <button type="button" id="btnClaimRebate" class="btn-sec" onclick="claimVipBetRebate()">Nhận Hoàn Trả Cược</button>
+        </div>
+
+        <div style="font-size:10.5px;font-weight:900;color:#fde047;">Bảng mốc quyền lợi VIP 0 – VIP 8:</div>
+        <div id="vipTiersList" style="display:flex;flex-direction:column;gap:5px;"></div>
+      </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 3: OWNER-ONLY SOI CẦU CHỦ PHÒNG (admin / 1234 ONLY)
+         ===================================================================== -->
+    <div id="modalOracle" class="modal-backdrop" onclick="if(event.target===this) closeModal('modalOracle')">
+      <div class="modal-sheet oracle-sheet">
+        <div class="modal-head">
+          <span class="modal-title">🔮 Soi Cầu Chủ Phòng (Live Game Oracle)</span>
+          <button type="button" class="btn-close-modal" onclick="closeModal('modalOracle')">✕</button>
+        </div>
+
+        <div class="oracle-tabs">
+          <button type="button" id="oracleTabTx" class="oracle-tab-btn active" onclick="switchOracleTab('tx')">🎲 Soi Tài Xỉu</button>
+          <button type="button" id="oracleTabBac" class="oracle-tab-btn" onclick="switchOracleTab('bac')">💃 Soi Sexy Baccarat</button>
+        </div>
+
+        <!-- TAB 1: TÀI XỈU LIVE -->
+        <div id="oraclePanelTx" class="oracle-panel active">
+          <div class="oracle-live-box">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:10px;font-weight:900;color:#99f6e4;">PHIÊN TÀI XỈU ĐANG CHẠY</span>
+              <span id="oracleTxPhaseBadge" style="font-size:10px;font-weight:900;color:#facc15;">-</span>
+            </div>
+            <div id="oracleTxVerdict" class="oracle-verdict">-</div>
+            <div id="oracleTxDiceDetail" style="font-size:11.5px;font-weight:800;color:#e2e8f0;">-</div>
+            <div id="oracleTxTrendDetail" style="font-size:10px;color:#99f6e4;">-</div>
+
+            <div style="font-size:9.5px;font-weight:900;color:#fde047;margin-top:3px;">
+              Ép kết quả phiên hiện tại (áp dụng ngay khi đang mở cược 15s):
+            </div>
+            <div class="oracle-force-row">
+              <button type="button" id="forceTxAuto" class="btn-force active" onclick="setTxOwnerForce('AUTO')">Ngẫu nhiên</button>
+              <button type="button" id="forceTxTAI" class="btn-force" onclick="setTxOwnerForce('TAI')">Ép TÀI</button>
+              <button type="button" id="forceTxXIU" class="btn-force" onclick="setTxOwnerForce('XIU')">Ép XỈU</button>
+              <button type="button" id="forceTxBAO" class="btn-force" onclick="setTxOwnerForce('BAO')">Ép BÃO</button>
+            </div>
+          </div>
+
+          <div style="font-size:10px;font-weight:900;color:#fde047;">Lịch sử cầu thật Tài Xỉu trong game:</div>
+          <div id="oracleTxHistoryBeads" class="bead-strip"></div>
+        </div>
+
+        <!-- TAB 2: SEXY BACCARAT LIVE -->
+        <div id="oraclePanelBac" class="oracle-panel">
+          <div class="oracle-live-box">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:10px;font-weight:900;color:#99f6e4;">VÁN SEXY BACCARAT ĐANG CHẠY</span>
+              <span id="oracleBacPhaseBadge" style="font-size:10px;font-weight:900;color:#facc15;">-</span>
+            </div>
+            <div id="oracleBacVerdict" class="oracle-verdict">-</div>
+            <div id="oracleBacCardsDetail" style="font-size:11px;font-weight:800;color:#e2e8f0;">-</div>
+            <div id="oracleBacSideDetail" style="font-size:10.5px;font-weight:800;color:#fde047;">-</div>
+            <div id="oracleBacTrendDetail" style="font-size:10px;color:#99f6e4;">-</div>
+
+            <div style="font-size:9.5px;font-weight:900;color:#fde047;margin-top:3px;">
+              Ép kết quả ván hiện tại (áp dụng ngay khi đang nhận cược 15s):
+            </div>
+            <div class="oracle-force-row">
+              <button type="button" id="forceBacAuto" class="btn-force active" onclick="setBacOwnerForce('AUTO')">Ngẫu nhiên</button>
+              <button type="button" id="forceBacPLAYER" class="btn-force" onclick="setBacOwnerForce('PLAYER')">Ép PLAYER</button>
+              <button type="button" id="forceBacBANKER" class="btn-force" onclick="setBacOwnerForce('BANKER')">Ép BANKER</button>
+              <button type="button" id="forceBacTIE" class="btn-force" onclick="setBacOwnerForce('TIE')">Ép TIE</button>
+            </div>
+          </div>
+
+          <div style="font-size:10px;font-weight:900;color:#fde047;">Lịch sử cầu thật Sexy Baccarat trong game:</div>
+          <div id="oracleBacHistoryBeads" class="bead-strip"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      /* =========================================================================
+         1. SAFE STORAGE ADAPTER (LOCALSTORAGE + IN-MEMORY FALLBACK)
+         ========================================================================= */
+      var memoryStorage = {};
+      function safeGetItem(key) {
+        try {
+          return window.localStorage.getItem(key);
+        } catch (e) {
+          return Object.prototype.hasOwnProperty.call(memoryStorage, key) ? memoryStorage[key] : null;
+        }
+      }
+      function safeSetItem(key, val) {
+        memoryStorage[key] = String(val);
+        try {
+          window.localStorage.setItem(key, String(val));
+        } catch (e) {}
+      }
+      function safeRemoveItem(key) {
+        delete memoryStorage[key];
+        try {
+          window.localStorage.removeItem(key);
+        } catch (e) {}
+      }
+
+      /* =========================================================================
+         2. CONSTANTS, OWNER CREDENTIALS (admin / 1234) & WALLET GUARD
+         ========================================================================= */
+      var DB_KEY = "tx_club_solo_db_v7";
+      var LEGACY_DB_KEYS = ["tx_club_solo_db_v6", "tx_club_solo_db_v5"];
+      var CUR_KEY = "tx_club_solo_cur_v7";
+      var OWNER_USER = "admin";
+      var OWNER_PASS = "1234";
+
+      var DEPOSIT_TIER_CODES = {
+        10000: "10koke",
+        20000: "20koke",
+        50000: "50koke",
+        100000: "100koke",
+        200000: "200koke",
+        500000: "500koke"
+      };
+
+      var VIP_TIERS = [
+        { level: 0, name: "Tân Thủ",     minPts: 0,          rankBonus: 0,        rebateRate: 0.002 },
+        { level: 1, name: "Đồng",        minPts: 500000,     rankBonus: 20000,    rebateRate: 0.004 },
+        { level: 2, name: "Bạc",         minPts: 2000000,    rankBonus: 80000,    rebateRate: 0.006 },
+        { level: 3, name: "Vàng",        minPts: 8000000,    rankBonus: 250000,   rebateRate: 0.008 },
+        { level: 4, name: "Bạch Kim",    minPts: 25000000,   rankBonus: 800000,   rebateRate: 0.010 },
+        { level: 5, name: "Kim Cương",   minPts: 80000000,   rankBonus: 2500000,  rebateRate: 0.013 },
+        { level: 6, name: "Cao Thủ",     minPts: 200000000,  rankBonus: 6000000,  rebateRate: 0.016 },
+        { level: 7, name: "Đại Cao Thủ", minPts: 500000000,  rankBonus: 15000000, rebateRate: 0.020 },
+        { level: 8, name: "Hoàng Gia",   minPts: 1200000000, rankBonus: 40000000, rebateRate: 0.025 }
+      ];
+
+      var GAME_LABELS = {
+        taixiu: "Tài Xỉu",
+        baucua: "Bầu Cua",
+        baccarat: "Sexy Baccarat",
+        xidach: "Xì Dách",
+        maubinh: "Mậu Binh",
+        tienlen: "Tiến Lên"
+      };
+
+      var state = {
+        authMode: "login",
+        currentUser: null,
+        activeScreen: "screenAuth",
+        selectedChip: 10000,
+        selectedDepositAmount: null,
+
+        /* Live Tài Xỉu (15s shake -> 10s squeeze -> 3s transition) */
+        txPhase: "shake",
+        txRemainMs: 15000,
+        txNextDice: [3, 4, 5],
+        txForceMode: "AUTO",
+        txPendingBets: { TAI: 0, XIU: 0, BAO: 0 },
+        txBets: { TAI: 0, XIU: 0, BAO: 0 },
+        txHistory: [],
+        txRevealed: false,
+
+        /* Live Bầu Cua (15s shake -> 10s squeeze -> 3s transition) */
+        bcPhase: "shake",
+        bcRemainMs: 15000,
+        bcNextFaces: [0, 1, 2],
+        bcPendingBets: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+        bcBets: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+        bcRevealed: false,
+
+        /* Live Sexy Baccarat (15s betting -> Bot flip -> 4s wait) */
+        bacPhase: "betting",
+        bacRemainMs: 15000,
+        bacNoComm: false,
+        bacForceMode: "AUTO",
+        bacHand: null,
+        bacFlipStep: 0,
+        bacPendingBets: {
+          PLAYER: 0, TIE: 0, BANKER: 0,
+          TIEU_LONG: 0, DAI_LONG: 0, LONG_HO_DAU: 0, DAI_HO: 0, TIEU_HO: 0
+        },
+        bacBets: {
+          PLAYER: 0, TIE: 0, BANKER: 0,
+          TIEU_LONG: 0, DAI_LONG: 0, LONG_HO_DAU: 0, DAI_HO: 0, TIEU_HO: 0
+        },
+        bacHistory: [],
+        bacSettled: false,
+
+        /* Xì Dách */
+        xdConfirmedBet: 0,
+        xdActive: false,
+        xdBet: 0,
+        xdDeck: [],
+        xdPlayer: [],
+        xdDealer: [],
+
+        /* Mậu Binh */
+        mbConfirmedBet: 0,
+        mbActive: false,
+        mbBet: 0,
+        mbCards: [],
+
+        /* Tiến Lên */
+        tlConfirmedBet: 0,
+        tlActive: false,
+        tlBet: 0,
+        tlPlayer: [],
+        tlBots: [[], [], []],
+        tlTable: [],
+        tlTableOwner: -1,
+        tlSelectedIdx: [],
+
+        /* Owner Oracle Tab */
+        oracleTab: "tx"
+      };
+
+      function fmtMoney(n) {
+        return Math.max(0, Math.floor(Number(n) || 0)).toLocaleString("vi-VN") + "đ";
+      }
+
+      var toastTimer = null;
+      function showToast(msg) {
+        var el = document.getElementById("toastBar");
+        if (!el) return;
+        el.textContent = msg;
+        el.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          el.classList.remove("show");
+        }, 2500);
+      }
+
+      /* New player profile initializes with 0đ balance (no 100k signup bonus) */
+      function createZeroProfile(username, pass, isOwner) {
+        var initBal = isOwner ? 5000000 : 0;
+        return {
+          username: username,
+          pass: String(pass),
+          isOwner: Boolean(isOwner),
+          locked: false,
+          bal: initBal,
+          baseBal: initBal,
+          ledger: 0,
+          vipDeposit: 0,
+          totalBetAllGames: 0,
+          gameBets: {
+            taixiu: 0,
+            baucua: 0,
+            baccarat: 0,
+            xidach: 0,
+            maubinh: 0,
+            tienlen: 0
+          },
+          vipClaimedLevel: 0,
+          vipRebateBaseBet: 0
+        };
+      }
+
+      function normalizeAndVerifyProfile(p, username) {
+        p.username = username;
+        p.pass = typeof p.pass === "string" ? p.pass : String(p.pass || "");
+        p.isOwner = username === OWNER_USER;
+        if (typeof p.locked !== "boolean") p.locked = false;
+        if (typeof p.bal !== "number" || isNaN(p.bal)) p.bal = 0;
+        if (typeof p.baseBal !== "number" || isNaN(p.baseBal)) p.baseBal = p.bal;
+        if (typeof p.ledger !== "number" || isNaN(p.ledger)) p.ledger = 0;
+        if (typeof p.vipDeposit !== "number" || isNaN(p.vipDeposit)) p.vipDeposit = 0;
+        if (typeof p.totalBetAllGames !== "number" || isNaN(p.totalBetAllGames)) p.totalBetAllGames = 0;
+        if (!p.gameBets || typeof p.gameBets !== "object") p.gameBets = {};
+
+        var sum6 = 0;
+        Object.keys(GAME_LABELS).forEach(function (g) {
+          if (typeof p.gameBets[g] !== "number" || isNaN(p.gameBets[g])) p.gameBets[g] = 0;
+          sum6 += p.gameBets[g];
+        });
+        if (sum6 > p.totalBetAllGames) p.totalBetAllGames = sum6;
+
+        if (typeof p.vipClaimedLevel !== "number") p.vipClaimedLevel = 0;
+        if (typeof p.vipRebateBaseBet !== "number") p.vipRebateBaseBet = 0;
+
+        /* Balance integrity check: expected bal === baseBal + ledger */
+        var expectedBal = p.baseBal + p.ledger;
+        if (p.bal < 0 || Math.abs(p.bal - expectedBal) > 1) {
+          p.locked = true;
+          p.bal = 0;
+          p.baseBal = 0;
+          p.ledger = 0;
+        }
+      }
+
+      function readDb() {
+        var db = {};
+        try {
+          var raw = safeGetItem(DB_KEY);
+          if (!raw) {
+            for (var k = 0; k < LEGACY_DB_KEYS.length; k++) {
+              var oldRaw = safeGetItem(LEGACY_DB_KEYS[k]);
+              if (oldRaw) {
+                raw = oldRaw;
+                break;
+              }
+            }
+          }
+          if (raw) {
+            var parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+              db = parsed;
+            }
+          }
+        } catch (e) {
+          db = {};
+        }
+
+        if (!db[OWNER_USER] || typeof db[OWNER_USER] !== "object") {
+          db[OWNER_USER] = createZeroProfile(OWNER_USER, OWNER_PASS, true);
+        } else {
+          db[OWNER_USER].pass = OWNER_PASS;
+          db[OWNER_USER].isOwner = true;
+          normalizeAndVerifyProfile(db[OWNER_USER], OWNER_USER);
+        }
+
+        Object.keys(db).forEach(function (u) {
+          if (db[u] && typeof db[u] === "object") {
+            normalizeAndVerifyProfile(db[u], u);
+          }
+        });
+        return db;
+      }
+
+      function saveDb(db) {
+        try {
+          safeSetItem(DB_KEY, JSON.stringify(db));
+        } catch (e) {}
+      }
+
+      function getCurrentProfile() {
+        if (!state.currentUser) return null;
+        var db = readDb();
+        return db[state.currentUser] || null;
+      }
+
+      function mutateCurrentProfile(fn) {
+        if (!state.currentUser) return null;
+        var db = readDb();
+        var p = db[state.currentUser];
+        if (!p) return null;
+        fn(p);
+        normalizeAndVerifyProfile(p, state.currentUser);
+        db[state.currentUser] = p;
+        saveDb(db);
+        syncAllWalletAndVipUI();
+        return p;
+      }
+
+      function isOwnerLoggedIn() {
+        return state.currentUser === OWNER_USER;
+      }
+
+      function spendWalletForBet(amount, gameKey) {
+        var p = getCurrentProfile();
+        if (!p) return false;
+        if (p.locked) {
+          showToast("Tài khoản đã bị khóa về 0đ do biến động số dư bất thường!");
+          return false;
+        }
+        if (amount <= 0 || p.bal < amount) {
+          showToast("Số dư ví 0đ hoặc không đủ! Bấm dấu + để nạp tiền.");
+          return false;
+        }
+        mutateCurrentProfile(function (prof) {
+          prof.bal -= amount;
+          prof.ledger -= amount;
+          if (gameKey && prof.gameBets[gameKey] !== undefined) {
+            prof.gameBets[gameKey] += amount;
+          }
+          prof.totalBetAllGames += amount;
+        });
+        return true;
+      }
+
+      function creditWalletWin(amount) {
+        if (amount <= 0) return;
+        mutateCurrentProfile(function (prof) {
+          if (prof.locked) return;
+          prof.bal += amount;
+          prof.ledger += amount;
+        });
+      }
+
+      function refundWalletBet(amount, gameKey) {
+        if (amount <= 0) return;
+        mutateCurrentProfile(function (prof) {
+          if (prof.locked) return;
+          prof.bal += amount;
+          prof.ledger += amount;
+          if (gameKey && prof.gameBets[gameKey] !== undefined) {
+            prof.gameBets[gameKey] = Math.max(0, prof.gameBets[gameKey] - amount);
+          }
+          prof.totalBetAllGames = Math.max(0, prof.totalBetAllGames - amount);
+        });
+      }
+
+      /* =========================================================================
+         3. VIP 0–8 ENGINE (AGGREGATED DEPOSITS + ALL 6 GAMES WAGERS)
+         ========================================================================= */
+      function computeVipInfo(p) {
+        var pts = (p.vipDeposit || 0) + (p.totalBetAllGames || 0);
+        var tier = VIP_TIERS[0];
+        for (var i = VIP_TIERS.length - 1; i >= 0; i--) {
+          if (pts >= VIP_TIERS[i].minPts) {
+            tier = VIP_TIERS[i];
+            break;
+          }
+        }
+        var nextTier = tier.level < 8 ? VIP_TIERS[tier.level + 1] : null;
+        var pct = 100;
+        var remain = 0;
+        if (nextTier) {
+          var span = Math.max(1, nextTier.minPts - tier.minPts);
+          pct = Math.min(100, Math.max(0, Math.round(((pts - tier.minPts) / span) * 100)));
+          remain = Math.max(0, nextTier.minPts - pts);
+        }
+        return { pts: pts, tier: tier, nextTier: nextTier, pct: pct, remain: remain };
+      }
+
+      function syncAllWalletAndVipUI() {
+        var p = getCurrentProfile();
+        var balStr = p ? fmtMoney(p.bal) : "0đ";
+        ["hudBalLobby", "hudBalTx", "hudBalBc", "hudBalBac", "hudBalXd", "hudBalMb", "hudBalTl"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = balStr;
+        });
+
+        /* Owner visibility strictly gated to admin / 1234 */
+        var ownerEls = document.querySelectorAll(".js-owner-only");
+        var ownerActive = isOwnerLoggedIn();
+        for (var i = 0; i < ownerEls.length; i++) {
+          ownerEls[i].classList.toggle("owner-visible", ownerActive);
+        }
+        if (!ownerActive) {
+          closeModal("modalOracle");
+        }
+
+        if (!p) return;
+        document.getElementById("lobbyUserName").textContent = p.username;
+
+        var v = computeVipInfo(p);
+        document.getElementById("hudVipLbl").textContent = "VIP " + v.tier.level;
+        document.getElementById("lobbyVipTitle").textContent = "VIP " + v.tier.level + " — " + v.tier.name;
+        document.getElementById("lobbyTotalDep").textContent = fmtMoney(p.vipDeposit);
+        document.getElementById("lobbyTotalBet").textContent = fmtMoney(p.totalBetAllGames);
+        document.getElementById("lobbyVipPts").textContent = fmtMoney(v.pts);
+        document.getElementById("lobbyVipFill").style.width = v.pct + "%";
+        document.getElementById("lobbyVipPctTxt").textContent = v.pct + "%";
+        document.getElementById("lobbyVipNextTxt").textContent = v.nextTier
+          ? ("Cần thêm " + fmtMoney(v.remain) + " lên VIP " + v.nextTier.level)
+          : "Đã đạt cấp tối đa VIP 8 Hoàng Gia";
+
+        document.getElementById("vipModalDep").textContent = fmtMoney(p.vipDeposit);
+        document.getElementById("vipModalBet").textContent = fmtMoney(p.totalBetAllGames);
+        document.getElementById("vipModalTotal").textContent = fmtMoney(v.pts);
+        document.getElementById("vipModalFill").style.width = v.pct + "%";
+        document.getElementById("vipModalPctTxt").textContent = v.pct + "%";
+        document.getElementById("vipModalNextTxt").textContent = v.nextTier
+          ? ("Cần thêm " + fmtMoney(v.remain) + " lên VIP " + v.nextTier.level)
+          : "Đã đạt cấp tối đa VIP 8 Hoàng Gia";
+
+        var bd = document.getElementById("vipGameBreakdown");
+        bd.innerHTML = "";
+        Object.keys(GAME_LABELS).forEach(function (g) {
+          var item = document.createElement("div");
+          item.className = "vip-g-item";
+          item.innerHTML =
+            "<span style='color:#99f6e4;'>" + GAME_LABELS[g] + "</span>" +
+            "<strong style='color:#fef08a;'>" + fmtMoney(p.gameBets[g]) + "</strong>";
+          bd.appendChild(item);
+        });
+
+        var claimableRank = 0;
+        for (var lv = p.vipClaimedLevel + 1; lv <= v.tier.level; lv++) {
+          claimableRank += VIP_TIERS[lv].rankBonus;
+        }
+        var btnRank = document.getElementById("btnClaimRankBonus");
+        btnRank.disabled = claimableRank <= 0;
+        btnRank.textContent = claimableRank > 0
+          ? ("Nhận Thưởng (" + fmtMoney(claimableRank) + ")")
+          : "Đã Nhận Thưởng Cấp";
+
+        var eligibleBet = Math.max(0, p.totalBetAllGames - p.vipRebateBaseBet);
+        var rebateAmt = Math.floor(eligibleBet * v.tier.rebateRate);
+        var btnReb = document.getElementById("btnClaimRebate");
+        btnReb.disabled = rebateAmt <= 0;
+        btnReb.textContent = rebateAmt > 0
+          ? ("Hoàn Trả (" + fmtMoney(rebateAmt) + ")")
+          : "Hoàn Trả Cược (0đ)";
+
+        var listEl = document.getElementById("vipTiersList");
+        listEl.innerHTML = "";
+        VIP_TIERS.forEach(function (t) {
+          var row = document.createElement("div");
+          row.className = "vip-tier-row" + (t.level === v.tier.level ? " current" : "");
+          row.innerHTML =
+            "<strong>VIP " + t.level + " • " + t.name + "</strong>" +
+            "<span style='color:#99f6e4;'>Mốc: " + fmtMoney(t.minPts) + "</span>" +
+            "<span style='color:#fef08a;'>Thưởng: " + fmtMoney(t.rankBonus) + " | Hoàn " + (t.rebateRate * 100).toFixed(1) + "%</span>";
+          listEl.appendChild(row);
+        });
+      }
+
+      window.openVipModal = function () {
+        syncAllWalletAndVipUI();
+        document.getElementById("modalVip").classList.add("open");
+      };
+
+      window.claimVipRankBonus = function () {
+        var p = getCurrentProfile();
+        if (!p || p.locked) return;
+        var v = computeVipInfo(p);
+        var reward = 0;
+        for (var lv = p.vipClaimedLevel + 1; lv <= v.tier.level; lv++) {
+          reward += VIP_TIERS[lv].rankBonus;
+        }
+        if (reward <= 0) return;
+        mutateCurrentProfile(function (prof) {
+          prof.vipClaimedLevel = v.tier.level;
+          prof.bal += reward;
+          prof.ledger += reward;
+        });
+        showToast("Đã nhận thưởng thăng cấp VIP: +" + fmtMoney(reward));
+      };
+
+      window.claimVipBetRebate = function () {
+        var p = getCurrentProfile();
+        if (!p || p.locked) return;
+        var v = computeVipInfo(p);
+        var eligible = Math.max(0, p.totalBetAllGames - p.vipRebateBaseBet);
+        var rebate = Math.floor(eligible * v.tier.rebateRate);
+        if (rebate <= 0) return;
+        mutateCurrentProfile(function (prof) {
+          prof.vipRebateBaseBet = prof.totalBetAllGames;
+          prof.bal += rebate;
+          prof.ledger += rebate;
+        });
+        showToast("Đã nhận hoàn trả cược 6 game: +" + fmtMoney(rebate));
+      };
+
+      /* =========================================================================
+         4. TWO-STEP DEPOSIT MODAL (SECRET ACTIVATION CODE REQUIRED)
+         ========================================================================= */
+      window.openDepositModal = function () {
+        window.backToDepositStep1();
+        document.getElementById("modalDeposit").classList.add("open");
+      };
+
+      window.selectDepositTier = function (amount) {
+        if (!DEPOSIT_TIER_CODES[amount]) return;
+        state.selectedDepositAmount = amount;
+        document.getElementById("depSelectedTierTitle").textContent = fmtMoney(amount);
+        document.getElementById("depCodeInp").value = "";
+        var errBox = document.getElementById("depErrTxt");
+        errBox.className = "auth-status-box";
+        errBox.textContent = "";
+        document.getElementById("depStep1").style.display = "none";
+        document.getElementById("depStep2").style.display = "flex";
+        setTimeout(function () {
+          var inp = document.getElementById("depCodeInp");
+          if (inp) inp.focus();
+        }, 40);
+      };
+
+      window.backToDepositStep1 = function () {
+        state.selectedDepositAmount = null;
+        document.getElementById("depCodeInp").value = "";
+        var errBox = document.getElementById("depErrTxt");
+        errBox.className = "auth-status-box";
+        errBox.textContent = "";
+        document.getElementById("depStep2").style.display = "none";
+        document.getElementById("depStep1").style.display = "block";
+      };
+
+      window.verifyAndCompleteDeposit = function () {
+        if (!state.currentUser) return;
+        var amount = state.selectedDepositAmount;
+        var expectedCode = DEPOSIT_TIER_CODES[amount];
+        var enteredCode = (document.getElementById("depCodeInp").value || "").trim().toLowerCase();
+        var errBox = document.getElementById("depErrTxt");
+
+        if (!amount || !expectedCode || enteredCode !== expectedCode) {
+          errBox.className = "auth-status-box err";
+          errBox.textContent = "Mã nạp không chính xác! Vui lòng kiểm tra lại mã kích hoạt của gói " + fmtMoney(amount || 0) + ".";
+          showToast("Mã nạp không chính xác!");
+          return;
+        }
+
+        mutateCurrentProfile(function (prof) {
+          if (prof.locked) {
+            showToast("Tài khoản đã bị khóa về 0đ!");
+            return;
+          }
+          prof.bal += amount;
+          prof.baseBal += amount;
+          prof.vipDeposit += amount;
+        });
+
+        window.backToDepositStep1();
+        closeModal("modalDeposit");
+        showToast("Xác thực mã thành công! Đã nạp +" + fmtMoney(amount));
+      };
+
+      window.closeModal = function (id) {
+        var el = document.getElementById(id);
+        if (el) el.classList.remove("open");
+      };
+
+      /* =========================================================================
+         5. AUTHENTICATION, SAVED ACCOUNTS & SCREEN ROUTING
+         ========================================================================= */
+      function setAuthStatus(type, msg) {
+        var box = document.getElementById("authStatusBox");
+        if (!box) return;
+        if (!msg) {
+          box.className = "auth-status-box";
+          box.textContent = "";
+          return;
+        }
+        box.className = "auth-status-box " + (type === "ok" ? "ok" : "err");
+        box.textContent = msg;
+      }
+
+      function renderSavedAccountsList() {
+        var db = readDb();
+        var names = Object.keys(db).filter(function (u) { return u !== OWNER_USER; });
+        var wrap = document.getElementById("savedAccountsWrap");
+        var list = document.getElementById("savedAccountsList");
+        if (!names.length) {
+          wrap.style.display = "none";
+          return;
+        }
+        wrap.style.display = "flex";
+        list.innerHTML = "";
+        names.forEach(function (u) {
+          var chip = document.createElement("button");
+          chip.type = "button";
+          chip.className = "saved-acc-chip";
+          chip.textContent = u + " (" + fmtMoney(db[u].bal) + ")";
+          chip.addEventListener("click", function () {
+            document.getElementById("authUserInp").value = u;
+            switchAuthTab("login");
+            setAuthStatus("ok", "Đã điền tên tài khoản '" + u + "'. Nhập mật khẩu để vào sảnh.");
+            document.getElementById("authPassInp").focus();
+          });
+          list.appendChild(chip);
+        });
+      }
+
+      function switchAuthTab(mode) {
+        state.authMode = mode === "reg" ? "reg" : "login";
+        document.getElementById("authTabLogin").classList.toggle("active", state.authMode === "login");
+        document.getElementById("authTabReg").classList.toggle("active", state.authMode === "reg");
+        document.getElementById("authSubmitBtn").textContent =
+          state.authMode === "login" ? "ĐĂNG NHẬP VÀO SẢNH" : "ĐĂNG KÝ (SỐ DƯ 0đ)";
+        setAuthStatus("", "");
+      }
+      window.switchAuthTab = switchAuthTab;
+
+      function handleAuthSubmit(evt) {
+        if (evt && typeof evt.preventDefault === "function") {
+          evt.preventDefault();
+        }
+
+        var rawUser = (document.getElementById("authUserInp").value || "").trim().toLowerCase();
+        var rawPass = (document.getElementById("authPassInp").value || "").trim();
+        setAuthStatus("", "");
+
+        if (!rawUser || rawUser.length < 3) {
+          setAuthStatus("err", "Tên tài khoản phải có ít nhất 3 ký tự (không để trống).");
+          return false;
+        }
+        if (/\s/.test(rawUser)) {
+          setAuthStatus("err", "Tên tài khoản không được chứa dấu cách.");
+          return false;
+        }
+        if (!rawPass || rawPass.length < 4) {
+          setAuthStatus("err", "Mật khẩu phải có ít nhất 4 ký tự.");
+          return false;
+        }
+
+        var db = readDb();
+
+        if (state.authMode === "reg") {
+          if (rawUser === OWNER_USER || Object.prototype.hasOwnProperty.call(db, rawUser)) {
+            setAuthStatus("err", "Tên tài khoản '" + rawUser + "' đã tồn tại! Hãy chuyển sang tab Đăng Nhập hoặc chọn tên khác.");
+            return false;
+          }
+          db[rawUser] = createZeroProfile(rawUser, rawPass, false);
+          saveDb(db);
+          enterLoggedInSession(rawUser);
+          showToast("Tạo tài khoản '" + rawUser + "' thành công (Số dư 0đ).");
+          return false;
+        }
+
+        if (rawUser === OWNER_USER) {
+          if (rawPass !== OWNER_PASS) {
+            setAuthStatus("err", "Sai mật khẩu tài khoản chủ phòng!");
+            return false;
+          }
+          saveDb(db);
+          enterLoggedInSession(OWNER_USER);
+          showToast("Đăng nhập Chủ Phòng (admin) — Đã mở 🔮 Soi Cầu!");
+          return false;
+        }
+
+        if (!Object.prototype.hasOwnProperty.call(db, rawUser)) {
+          setAuthStatus("err", "Tài khoản '" + rawUser + "' chưa tồn tại. Bấm sang tab 'Đăng Ký' để tạo mới!");
+          return false;
+        }
+
+        if (db[rawUser].pass !== rawPass) {
+          setAuthStatus("err", "Sai mật khẩu cho tài khoản '" + rawUser + "'.");
+          return false;
+        }
+
+        enterLoggedInSession(rawUser);
+        showToast("Đăng nhập thành công: " + rawUser);
+        return false;
+      }
+      window.handleAuthSubmit = handleAuthSubmit;
+
+      function enterLoggedInSession(username) {
+        state.currentUser = username;
+        safeSetItem(CUR_KEY, username);
+        document.getElementById("authPassInp").value = "";
+        setAuthStatus("", "");
+        syncAllWalletAndVipUI();
+        showScreen("screenLobby");
+      }
+
+      window.logoutAccount = function () {
+        closeModal("modalOracle");
+        closeModal("modalVip");
+        closeModal("modalDeposit");
+        state.currentUser = null;
+        safeRemoveItem(CUR_KEY);
+        syncAllWalletAndVipUI();
+        renderSavedAccountsList();
+        showScreen("screenAuth");
+      };
+
+      function showScreen(screenId) {
+        state.activeScreen = screenId;
+        var screens = document.querySelectorAll(".screen");
+        for (var i = 0; i < screens.length; i++) {
+          screens[i].classList.toggle("active", screens[i].id === screenId);
+        }
+        syncAllWalletAndVipUI();
+      }
+
+      window.openGameRoom = function (gameKey) {
+        var map = {
+          taixiu: "screenTaixiu",
+          baucua: "screenBaucua",
+          baccarat: "screenBaccarat",
+          xidach: "screenXidach",
+          maubinh: "screenMaubinh",
+          tienlen: "screenTienlen"
+        };
+        if (map[gameKey]) showScreen(map[gameKey]);
+      };
+
+      window.backToLobby = function () {
+        showScreen("screenLobby");
+      };
+
+      /* =========================================================================
+         6. SHARED CHIP RACKS
+         ========================================================================= */
+      var CHIP_VALUES = [5000, 10000, 50000, 100000, 500000];
+      var CHIP_LABELS = ["5K", "10K", "50K", "100K", "500K"];
+
+      function renderAllChipRacks() {
+        var racks = document.querySelectorAll("[data-chip-rack]");
+        racks.forEach(function (rack) {
+          rack.innerHTML = "";
+          CHIP_VALUES.forEach(function (val, idx) {
+            var btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "chip-btn" + (state.selectedChip === val ? " active" : "");
+            btn.textContent = CHIP_LABELS[idx];
+            btn.onclick = function () {
+              state.selectedChip = val;
+              renderAllChipRacks();
+              updateCardStakePreviews();
+            };
+            rack.appendChild(btn);
+          });
+        });
+        updateCardStakePreviews();
+      }
+
+      function updateCardStakePreviews() {
+        var chipStr = fmtMoney(state.selectedChip);
+        var xdPrev = document.getElementById("xdChipPreview");
+        var mbPrev = document.getElementById("mbChipPreview");
+        var tlPrev = document.getElementById("tlChipPreview");
+        if (xdPrev) xdPrev.textContent = "Phỉnh chọn: " + chipStr;
+        if (mbPrev) mbPrev.textContent = "Phỉnh chọn: " + chipStr;
+        if (tlPrev) tlPrev.textContent = "Phỉnh chọn: " + chipStr;
+
+        var xdStake = document.getElementById("xdStakeLabel");
+        var mbStake = document.getElementById("mbStakeLabel");
+        var tlStake = document.getElementById("tlStakeLabel");
+        if (xdStake) xdStake.textContent = "Cược đã xác nhận: " + fmtMoney(state.xdConfirmedBet);
+        if (mbStake) mbStake.textContent = "Cược đã xác nhận: " + fmtMoney(state.mbConfirmedBet);
+        if (tlStake) tlStake.textContent = "Cược đã xác nhận: " + fmtMoney(state.tlConfirmedBet);
+      }
+
+      /* =========================================================================
+         7. GAME 1: TÀI XỈU (PENDING BETS -> ✓ XÁC NHẬN CƯỢC -> 10s SQUEEZE)
+         ========================================================================= */
+      function rollTxDice(forceMode) {
+        if (forceMode === "BAO") {
+          var v = 1 + Math.floor(Math.random() * 6);
+          return [v, v, v];
+        }
+        while (true) {
+          var d1 = 1 + Math.floor(Math.random() * 6);
+          var d2 = 1 + Math.floor(Math.random() * 6);
+          var d3 = 1 + Math.floor(Math.random() * 6);
+          var isTriple = d1 === d2 && d2 === d3;
+          var sum = d1 + d2 + d3;
+          if (forceMode === "TAI") {
+            if (!isTriple && sum >= 11 && sum <= 17) return [d1, d2, d3];
+          } else if (forceMode === "XIU") {
+            if (!isTriple && sum >= 4 && sum <= 10) return [d1, d2, d3];
+          } else {
+            return [d1, d2, d3];
+          }
+        }
+      }
+
+      function classifyTxDice(dice) {
+        var sum = dice[0] + dice[1] + dice[2];
+        var isBao = dice[0] === dice[1] && dice[1] === dice[2];
+        var outcome = isBao ? "BAO" : (sum >= 11 ? "TAI" : "XIU");
+        return { dice: dice, sum: sum, isBao: isBao, outcome: outcome };
+      }
+
+      function initTxHistorySeed() {
+        var seed = [[4,5,5],[2,3,3],[5,5,6],[1,2,4],[3,4,6],[1,3,3],[4,6,6],[2,4,4],[3,5,6],[1,1,4]];
+        state.txHistory = seed.map(classifyTxDice);
+        state.txNextDice = rollTxDice("AUTO");
+      }
+
+      window.placeTxBet = function (door) {
+        if (!state.currentUser) return;
+        if (state.txPhase !== "shake") {
+          showToast("Đã hết 15s đặt cược! Đợi sang phiên mới.");
+          return;
+        }
+        var p = getCurrentProfile();
+        if (!p || p.locked) return;
+        var pendingTotal = state.txPendingBets.TAI + state.txPendingBets.XIU + state.txPendingBets.BAO;
+        if (p.bal < pendingTotal + state.selectedChip) {
+          showToast("Số dư ví không đủ cho mức cược tạm này!");
+          return;
+        }
+        state.txPendingBets[door] += state.selectedChip;
+        renderTxUI();
+      };
+
+      window.clearTxBets = function () {
+        if (state.txPhase !== "shake") return;
+        state.txPendingBets = { TAI: 0, XIU: 0, BAO: 0 };
+        renderTxUI();
+        showToast("Đã xóa cược tạm chưa xác nhận.");
+      };
+
+      window.handleTxMainAction = function () {
+        if (state.txPhase === "squeeze" && !state.txRevealed) {
+          revealTxRoundNow();
+          return;
+        }
+        if (state.txPhase !== "shake") return;
+        var pTai = state.txPendingBets.TAI;
+        var pXiu = state.txPendingBets.XIU;
+        var pBao = state.txPendingBets.BAO;
+        var totalPending = pTai + pXiu + pBao;
+        if (totalPending <= 0) {
+          showToast("Bấm chọn cửa TÀI, XỈU hoặc BÃO trước khi xác nhận!");
+          return;
+        }
+        if (!spendWalletForBet(totalPending, "taixiu")) return;
+        state.txBets.TAI += pTai;
+        state.txBets.XIU += pXiu;
+        state.txBets.BAO += pBao;
+        state.txPendingBets = { TAI: 0, XIU: 0, BAO: 0 };
+        renderTxUI();
+        showToast("✓ Đã xác nhận cược Tài Xỉu: " + fmtMoney(totalPending));
+      };
+
+      function enterTxSqueezePhase() {
+        state.txPendingBets = { TAI: 0, XIU: 0, BAO: 0 };
+        state.txPhase = "squeeze";
+        state.txRemainMs = 10000;
+        state.txRevealed = false;
+        var lid = document.getElementById("txBowlLid");
+        lid.classList.remove("hidden");
+        lid.style.transform = "translate(0px, 0px)";
+        renderTxUI();
+      }
+
+      function revealTxRoundNow() {
+        if (state.txRevealed) return;
+        state.txRevealed = true;
+        document.getElementById("txBowlLid").classList.add("hidden");
+
+        var res = classifyTxDice(state.txNextDice);
+        state.txHistory.push(res);
+        if (state.txHistory.length > 36) state.txHistory.shift();
+
+        var winTotal = 0;
+        if (res.outcome === "TAI" && state.txBets.TAI > 0) winTotal += state.txBets.TAI * 2;
+        if (res.outcome === "XIU" && state.txBets.XIU > 0) winTotal += state.txBets.XIU * 2;
+        if (res.outcome === "BAO" && state.txBets.BAO > 0) winTotal += state.txBets.BAO * 25;
+
+        if (winTotal > 0) {
+          creditWalletWin(winTotal);
+          showToast("Tài Xỉu về " + res.outcome + " (" + res.sum + " điểm) • +" + fmtMoney(winTotal));
+        }
+
+        document.getElementById("txResultBanner").textContent =
+          "Kết quả: " + (res.outcome === "TAI" ? "TÀI" : res.outcome === "XIU" ? "XỈU" : "BÃO") +
+          " (" + res.sum + " điểm: " + res.dice.join("-") + ")";
+
+        renderTxUI();
+        if (isOwnerLoggedIn()) renderOwnerOracleModal();
+      }
+
+      function enterTxTransitPhase() {
+        if (!state.txRevealed) revealTxRoundNow();
+        state.txPhase = "transit";
+        state.txRemainMs = 3000;
+        renderTxUI();
+      }
+
+      function startNewTxRound() {
+        state.txPhase = "shake";
+        state.txRemainMs = 15000;
+        state.txPendingBets = { TAI: 0, XIU: 0, BAO: 0 };
+        state.txBets = { TAI: 0, XIU: 0, BAO: 0 };
+        state.txRevealed = false;
+        state.txNextDice = rollTxDice(state.txForceMode);
+        document.getElementById("txBowlLid").classList.add("hidden");
+        document.getElementById("txResultBanner").textContent = "Chọn cửa rồi bấm ✓ XÁC NHẬN CƯỢC";
+        renderTxUI();
+        if (isOwnerLoggedIn()) renderOwnerOracleModal();
+      }
+
+      function renderTxUI() {
+        var phaseEl = document.getElementById("txPhaseTxt");
+        var timerEl = document.getElementById("txTimerTxt");
+        var plateEl = document.getElementById("txPlate");
+        var btnMain = document.getElementById("btnTxMainAction");
+
+        timerEl.textContent = (Math.max(0, state.txRemainMs) / 1000).toFixed(1) + "s";
+        plateEl.classList.toggle("shaking", state.txPhase === "shake");
+
+        var pendSum = state.txPendingBets.TAI + state.txPendingBets.XIU + state.txPendingBets.BAO;
+
+        if (state.txPhase === "shake") {
+          phaseEl.textContent = "Lắc & Đặt cược (15s)";
+          btnMain.className = "btn-confirm-bet";
+          btnMain.disabled = pendSum <= 0;
+          btnMain.textContent = pendSum > 0
+            ? ("✓ XÁC NHẬN (" + fmtMoney(pendSum) + ")")
+            : "✓ XÁC NHẬN CƯỢC";
+        } else if (state.txPhase === "squeeze") {
+          phaseEl.textContent = "Nặn Hũ Mở Bát (10s)";
+          btnMain.className = "btn-gold-sm";
+          btnMain.disabled = state.txRevealed;
+          btnMain.textContent = state.txRevealed ? "Đã Mở Bát" : "Mở Nhanh";
+        } else {
+          phaseEl.textContent = "Chuẩn bị sang phiên (3s)";
+          btnMain.className = "btn-sec";
+          btnMain.disabled = true;
+          btnMain.textContent = "Đợi sang phiên...";
+        }
+
+        [1, 2, 3].forEach(function (idx) {
+          var dEl = document.getElementById("txDie" + idx);
+          var val = state.txNextDice[idx - 1];
+          if (state.txPhase === "shake") {
+            dEl.textContent = "?";
+            dEl.className = "dice-face";
+          } else {
+            dEl.textContent = String(val);
+            dEl.className = "dice-face" + (val === 1 || val === 4 ? " red-pip" : "");
+          }
+        });
+
+        document.getElementById("txBetTai").textContent = "Chốt: " + fmtMoney(state.txBets.TAI);
+        document.getElementById("txBetBao").textContent = "Chốt: " + fmtMoney(state.txBets.BAO);
+        document.getElementById("txBetXiu").textContent = "Chốt: " + fmtMoney(state.txBets.XIU);
+
+        document.getElementById("txPendTai").textContent = state.txPendingBets.TAI > 0 ? ("Chờ XN: +" + fmtMoney(state.txPendingBets.TAI)) : "";
+        document.getElementById("txPendBao").textContent = state.txPendingBets.BAO > 0 ? ("Chờ XN: +" + fmtMoney(state.txPendingBets.BAO)) : "";
+        document.getElementById("txPendXiu").textContent = state.txPendingBets.XIU > 0 ? ("Chờ XN: +" + fmtMoney(state.txPendingBets.XIU)) : "";
+
+        var lastOutcome = state.txRevealed && state.txHistory.length
+          ? state.txHistory[state.txHistory.length - 1].outcome
+          : "";
+        document.getElementById("txDoorTai").classList.toggle("win-glow", lastOutcome === "TAI");
+        document.getElementById("txDoorBao").classList.toggle("win-glow", lastOutcome === "BAO");
+        document.getElementById("txDoorXiu").classList.toggle("win-glow", lastOutcome === "XIU");
+
+        var strip = document.getElementById("txBeadStrip");
+        strip.innerHTML = "";
+        state.txHistory.slice(-22).forEach(function (h) {
+          var b = document.createElement("span");
+          b.className = "bead " + h.outcome;
+          b.textContent = h.outcome === "TAI" ? "T" : (h.outcome === "XIU" ? "X" : "BÃO");
+          strip.appendChild(b);
+        });
+        strip.scrollLeft = strip.scrollWidth;
+      }
+
+      /* Interactive Bowl Squeeze Drag */
+      (function bindBowlDrag() {
+        var lid = document.getElementById("txBowlLid");
+        var dragging = false, startX = 0, startY = 0;
+        function onStart(e) {
+          if (state.txPhase !== "squeeze" || state.txRevealed) return;
+          dragging = true;
+          var pt = e.touches ? e.touches[0] : e;
+          startX = pt.clientX;
+          startY = pt.clientY;
+        }
+        function onMove(e) {
+          if (!dragging) return;
+          var pt = e.touches ? e.touches[0] : e;
+          var dx = pt.clientX - startX;
+          var dy = pt.clientY - startY;
+          lid.style.transform = "translate(" + dx + "px," + dy + "px)";
+          if (Math.hypot(dx, dy) > 48) {
+            dragging = false;
+            revealTxRoundNow();
+          }
+        }
+        function onEnd() {
+          if (!dragging) return;
+          dragging = false;
+          lid.style.transform = "translate(0px, 0px)";
+        }
+        lid.addEventListener("mousedown", onStart);
+        window.addEventListener("mousemove", onMove);
+        window.addEventListener("mouseup", onEnd);
+        lid.addEventListener("touchstart", onStart, { passive: true });
+        lid.addEventListener("touchmove", onMove, { passive: true });
+        lid.addEventListener("touchend", onEnd);
+      })();
+
+      /* =========================================================================
+         8. GAME 2: BẦU CUA (PENDING BETS -> ✓ XÁC NHẬN CƯỢC -> 10s SQUEEZE)
+         ========================================================================= */
+      var BC_SYMBOLS = [
+        { id: 0, name: "BẦU", icon: "🎃" },
+        { id: 1, name: "CUA", icon: "🦀" },
+        { id: 2, name: "TÔM", icon: "🦐" },
+        { id: 3, name: "CÁ",  icon: "🐟" },
+        { id: 4, name: "GÀ",  icon: "🐓" },
+        { id: 5, name: "NAI", icon: "🦌" }
+      ];
+
+      function buildBcDoors() {
+        var grid = document.getElementById("bcDoorsGrid");
+        grid.innerHTML = "";
+        BC_SYMBOLS.forEach(function (s) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.id = "bcDoor" + s.id;
+          btn.className = "bet-door";
+          btn.innerHTML =
+            "<span style='font-size:21px;'>" + s.icon + "</span>" +
+            "<span class='bet-door-title' style='font-size:11.5px;'>" + s.name + "</span>" +
+            "<span id='bcBet" + s.id + "' class='bet-door-amt'>Chốt: 0đ</span>" +
+            "<span id='bcPend" + s.id + "' class='bet-door-pending'></span>";
+          btn.onclick = function () { placeBcBet(s.id); };
+          grid.appendChild(btn);
+        });
+      }
+
+      function getBcPendingTotal() {
+        var sum = 0;
+        for (var i = 0; i < 6; i++) sum += state.bcPendingBets[i];
+        return sum;
+      }
+
+      window.placeBcBet = function (id) {
+        if (!state.currentUser) return;
+        if (state.bcPhase !== "shake") {
+          showToast("Đã hết 15s đặt cược Bầu Cua!");
+          return;
+        }
+        var p = getCurrentProfile();
+        if (!p || p.locked) return;
+        if (p.bal < getBcPendingTotal() + state.selectedChip) {
+          showToast("Số dư ví không đủ cho mức cược tạm này!");
+          return;
+        }
+        state.bcPendingBets[id] += state.selectedChip;
+        renderBcUI();
+      };
+
+      window.clearBcBets = function () {
+        if (state.bcPhase !== "shake") return;
+        state.bcPendingBets = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+        renderBcUI();
+        showToast("Đã hủy cược tạm Bầu Cua.");
+      };
+
+      window.handleBcMainAction = function () {
+        if (state.bcPhase === "squeeze" && !state.bcRevealed) {
+          revealBcNow();
+          return;
+        }
+        if (state.bcPhase !== "shake") return;
+        var totalPending = getBcPendingTotal();
+        if (totalPending <= 0) {
+          showToast("Chọn linh vật trước khi bấm ✓ XÁC NHẬN CƯỢC!");
+          return;
+        }
+        if (!spendWalletForBet(totalPending, "baucua")) return;
+        for (var i = 0; i < 6; i++) {
+          state.bcBets[i] += state.bcPendingBets[i];
+          state.bcPendingBets[i] = 0;
+        }
+        renderBcUI();
+        showToast("✓ Đã xác nhận cược Bầu Cua: " + fmtMoney(totalPending));
+      };
+
+      function enterBcSqueezePhase() {
+        state.bcPendingBets = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+        state.bcPhase = "squeeze";
+        state.bcRemainMs = 10000;
+        state.bcRevealed = false;
+        document.getElementById("bcBowlLid").classList.remove("hidden");
+        renderBcUI();
+      }
+
+      function revealBcNow() {
+        if (state.bcRevealed) return;
+        state.bcRevealed = true;
+        document.getElementById("bcBowlLid").classList.add("hidden");
+
+        var winTotal = 0;
+        for (var id = 0; id < 6; id++) {
+          var stake = state.bcBets[id];
+          if (stake > 0) {
+            var hits = state.bcNextFaces.filter(function (f) { return f === id; }).length;
+            if (hits > 0) winTotal += stake * (hits + 1);
+          }
+        }
+        if (winTotal > 0) {
+          creditWalletWin(winTotal);
+          showToast("Thắng Bầu Cua +" + fmtMoney(winTotal));
+        }
+
+        var names = state.bcNextFaces.map(function (f) { return BC_SYMBOLS[f].icon + " " + BC_SYMBOLS[f].name; });
+        document.getElementById("bcResultBanner").textContent = "Kết quả: " + names.join(" • ");
+        renderBcUI();
+      }
+
+      function enterBcTransitPhase() {
+        if (!state.bcRevealed) revealBcNow();
+        state.bcPhase = "transit";
+        state.bcRemainMs = 3000;
+        renderBcUI();
+      }
+
+      function startNewBcRound() {
+        state.bcPhase = "shake";
+        state.bcRemainMs = 15000;
+        state.bcPendingBets = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+        state.bcBets = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+        state.bcRevealed = false;
+        state.bcNextFaces = [
+          Math.floor(Math.random() * 6),
+          Math.floor(Math.random() * 6),
+          Math.floor(Math.random() * 6)
+        ];
+        document.getElementById("bcBowlLid").classList.add("hidden");
+        document.getElementById("bcResultBanner").textContent = "Chọn linh vật rồi bấm ✓ XÁC NHẬN CƯỢC";
+        renderBcUI();
+      }
+
+      function renderBcUI() {
+        document.getElementById("bcTimerTxt").textContent = (Math.max(0, state.bcRemainMs) / 1000).toFixed(1) + "s";
+        document.getElementById("bcPlate").classList.toggle("shaking", state.bcPhase === "shake");
+        var btnMain = document.getElementById("btnBcMainAction");
+        var pendSum = getBcPendingTotal();
+
+        if (state.bcPhase === "shake") {
+          document.getElementById("bcPhaseTxt").textContent = "Xóc & Đặt cược (15s)";
+          btnMain.className = "btn-confirm-bet";
+          btnMain.disabled = pendSum <= 0;
+          btnMain.textContent = pendSum > 0
+            ? ("✓ XÁC NHẬN (" + fmtMoney(pendSum) + ")")
+            : "✓ XÁC NHẬN CƯỢC";
+        } else if (state.bcPhase === "squeeze") {
+          document.getElementById("bcPhaseTxt").textContent = "Nặn Hũ Bầu Cua (10s)";
+          btnMain.className = "btn-gold-sm";
+          btnMain.disabled = state.bcRevealed;
+          btnMain.textContent = state.bcRevealed ? "Đã Mở Bát" : "Mở Nhanh";
+        } else {
+          document.getElementById("bcPhaseTxt").textContent = "Sang phiên mới (3s)";
+          btnMain.className = "btn-sec";
+          btnMain.disabled = true;
+          btnMain.textContent = "Đợi sang phiên...";
+        }
+
+        [1, 2, 3].forEach(function (idx) {
+          var el = document.getElementById("bcFace" + idx);
+          el.textContent = state.bcPhase === "shake" ? "❓" : BC_SYMBOLS[state.bcNextFaces[idx - 1]].icon;
+        });
+
+        for (var i = 0; i < 6; i++) {
+          var bEl = document.getElementById("bcBet" + i);
+          if (bEl) bEl.textContent = "Chốt: " + fmtMoney(state.bcBets[i]);
+          var pEl = document.getElementById("bcPend" + i);
+          if (pEl) pEl.textContent = state.bcPendingBets[i] > 0 ? ("Chờ: +" + fmtMoney(state.bcPendingBets[i])) : "";
+          var dEl = document.getElementById("bcDoor" + i);
+          if (dEl) dEl.classList.toggle("win-glow", state.bcRevealed && state.bcNextFaces.indexOf(i) !== -1);
+        }
+      }
+
+      /* =========================================================================
+         9. GAME 3: SEXY BACCARAT (PENDING BETS -> ✓ XÁC NHẬN CƯỢC -> BOT FLIP)
+         ========================================================================= */
+      var SUITS = ["♠", "♥", "♦", "♣"];
+      var RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+      var BAC_DOOR_KEYS = ["PLAYER", "TIE", "BANKER", "TIEU_LONG", "DAI_LONG", "LONG_HO_DAU", "DAI_HO", "TIEU_HO"];
+
+      function drawRandomCard() {
+        var r = Math.floor(Math.random() * 13);
+        var s = SUITS[Math.floor(Math.random() * 4)];
+        var pts = r === 0 ? 1 : (r >= 9 ? 0 : r + 1);
+        return { rank: RANKS[r], suit: s, pts: pts, red: s === "♥" || s === "♦" };
+      }
+
+      function bacTotalPts(cards) {
+        var sum = 0;
+        for (var i = 0; i < cards.length; i++) sum += cards[i].pts;
+        return sum % 10;
+      }
+
+      function buildBaccaratHand(forceMode) {
+        while (true) {
+          var pCards = [drawRandomCard(), drawRandomCard()];
+          var bCards = [drawRandomCard(), drawRandomCard()];
+          var pPts = bacTotalPts(pCards);
+          var bPts = bacTotalPts(bCards);
+
+          var natural = pPts >= 8 || bPts >= 8;
+          if (!natural) {
+            var pThirdVal = null;
+            if (pPts <= 5) {
+              var c3 = drawRandomCard();
+              pCards.push(c3);
+              pThirdVal = c3.pts;
+              pPts = bacTotalPts(pCards);
+            }
+            if (pThirdVal === null) {
+              if (bPts <= 5) {
+                bCards.push(drawRandomCard());
+                bPts = bacTotalPts(bCards);
+              }
+            } else {
+              var bankerDraws = false;
+              if (bPts <= 2) bankerDraws = true;
+              else if (bPts === 3 && pThirdVal !== 8) bankerDraws = true;
+              else if (bPts === 4 && pThirdVal >= 2 && pThirdVal <= 7) bankerDraws = true;
+              else if (bPts === 5 && pThirdVal >= 4 && pThirdVal <= 7) bankerDraws = true;
+              else if (bPts === 6 && (pThirdVal === 6 || pThirdVal === 7)) bankerDraws = true;
+              if (bankerDraws) {
+                bCards.push(drawRandomCard());
+                bPts = bacTotalPts(bCards);
+              }
+            }
+          }
+
+          var outcome = pPts > bPts ? "PLAYER" : (bPts > pPts ? "BANKER" : "TIE");
+          if (forceMode && forceMode !== "AUTO" && outcome !== forceMode) {
+            continue;
+          }
+
+          var diff = Math.abs(pPts - bPts);
+          var sideWins = {
+            TIEU_LONG: outcome === "PLAYER" && !natural && diff === 4,
+            DAI_LONG: outcome === "PLAYER" && !natural && diff >= 5,
+            LONG_HO_DAU: outcome === "TIE" || diff === 1,
+            DAI_HO: outcome === "BANKER" && !natural && diff >= 5,
+            TIEU_HO: outcome === "BANKER" && !natural && diff === 4
+          };
+
+          return {
+            pCards: pCards,
+            bCards: bCards,
+            pPts: pPts,
+            bPts: bPts,
+            natural: natural,
+            outcome: outcome,
+            sideWins: sideWins
+          };
+        }
+      }
+
+      function initBacHistorySeed() {
+        var seed = ["B", "B", "P", "B", "P", "P", "T", "B", "B", "P", "P", "B"];
+        state.bacHistory = seed.map(function (c) {
+          return { outcome: c === "P" ? "PLAYER" : (c === "B" ? "BANKER" : "TIE"), code: c };
+        });
+        state.bacHand = buildBaccaratHand("AUTO");
+      }
+
+      function getBacPendingTotal() {
+        var sum = 0;
+        BAC_DOOR_KEYS.forEach(function (k) { sum += state.bacPendingBets[k]; });
+        return sum;
+      }
+
+      window.placeBacBet = function (door) {
+        if (!state.currentUser) return;
+        if (state.bacPhase !== "betting") {
+          showToast("Đã khóa sổ! Bot Sexy đang lật bài.");
+          return;
+        }
+        var p = getCurrentProfile();
+        if (!p || p.locked) return;
+        if (p.bal < getBacPendingTotal() + state.selectedChip) {
+          showToast("Số dư ví không đủ cho mức cược tạm này!");
+          return;
+        }
+        state.bacPendingBets[door] += state.selectedChip;
+        renderBacUI();
+      };
+
+      window.clearBacBets = function () {
+        if (state.bacPhase !== "betting") return;
+        BAC_DOOR_KEYS.forEach(function (k) { state.bacPendingBets[k] = 0; });
+        renderBacUI();
+        showToast("Đã hủy cược tạm Sexy Baccarat.");
+      };
+
+      window.confirmBacBets = function () {
+        if (state.bacPhase !== "betting") return;
+        var totalPending = getBacPendingTotal();
+        if (totalPending <= 0) {
+          showToast("Bấm chọn cửa cược trên bàn trước khi xác nhận!");
+          return;
+        }
+        if (!spendWalletForBet(totalPending, "baccarat")) return;
+        BAC_DOOR_KEYS.forEach(function (k) {
+          state.bacBets[k] += state.bacPendingBets[k];
+          state.bacPendingBets[k] = 0;
+        });
+        renderBacUI();
+        showToast("✓ Đã xác nhận cược Baccarat: " + fmtMoney(totalPending));
+      };
+
+      window.toggleBacNoComm = function () {
+        state.bacNoComm = !state.bacNoComm;
+        document.getElementById("btnBacComm").textContent = state.bacNoComm ? "Không Hoa Hồng" : "Có Hoa Hồng";
+        document.getElementById("bacBankerOddsLbl").textContent = state.bacNoComm ? "1:1 (6đ 1:0.5)" : "1:0.95";
+      };
+
+      window.sendBacChat = function () {
+        var inp = document.getElementById("bacChatInp");
+        var txt = (inp.value || "").trim();
+        if (!txt) return;
+        inp.value = "";
+        var log = document.getElementById("bacChatLog");
+        var row = document.createElement("div");
+        row.innerHTML = "<b style='color:#38bdf8;'>" + (state.currentUser || "Khách") + ":</b> " + txt.replace(/</g, "&lt;");
+        log.appendChild(row);
+        log.scrollTop = log.scrollHeight;
+      };
+
+      function startBacBotFlipSequence() {
+        BAC_DOOR_KEYS.forEach(function (k) { state.bacPendingBets[k] = 0; });
+        state.bacPhase = "flipping";
+        state.bacRemainMs = 2800;
+        state.bacFlipStep = 1;
+        state.bacSettled = false;
+        renderBacUI();
+
+        setTimeout(function () {
+          if (state.bacPhase === "flipping") { state.bacFlipStep = 2; renderBacUI(); }
+        }, 650);
+        setTimeout(function () {
+          if (state.bacPhase === "flipping") { state.bacFlipStep = 3; renderBacUI(); }
+        }, 1300);
+        setTimeout(function () {
+          if (state.bacPhase === "flipping") {
+            state.bacFlipStep = 4;
+            settleBaccaratRound();
+          }
+        }, 1950);
+      }
+
+      function settleBaccaratRound() {
+        if (state.bacSettled) return;
+        state.bacSettled = true;
+        var h = state.bacHand;
+        var code = h.outcome === "PLAYER" ? "P" : (h.outcome === "BANKER" ? "B" : "T");
+        state.bacHistory.push({ outcome: h.outcome, code: code });
+        if (state.bacHistory.length > 42) state.bacHistory.shift();
+
+        var winTotal = 0;
+        if (h.outcome === "PLAYER" && state.bacBets.PLAYER > 0) winTotal += state.bacBets.PLAYER * 2;
+        if (h.outcome === "TIE") {
+          if (state.bacBets.TIE > 0) winTotal += state.bacBets.TIE * 9;
+          winTotal += state.bacBets.PLAYER + state.bacBets.BANKER;
+        }
+        if (h.outcome === "BANKER" && state.bacBets.BANKER > 0) {
+          if (state.bacNoComm) {
+            winTotal += h.bPts === 6 ? Math.floor(state.bacBets.BANKER * 1.5) : state.bacBets.BANKER * 2;
+          } else {
+            winTotal += Math.floor(state.bacBets.BANKER * 1.95);
+          }
+        }
+        if (h.sideWins.TIEU_LONG && state.bacBets.TIEU_LONG > 0) winTotal += state.bacBets.TIEU_LONG * 16;
+        if (h.sideWins.DAI_LONG && state.bacBets.DAI_LONG > 0) winTotal += state.bacBets.DAI_LONG * 31;
+        if (h.sideWins.LONG_HO_DAU && state.bacBets.LONG_HO_DAU > 0) winTotal += state.bacBets.LONG_HO_DAU * 101;
+        if (h.sideWins.DAI_HO && state.bacBets.DAI_HO > 0) winTotal += state.bacBets.DAI_HO * 51;
+        if (h.sideWins.TIEU_HO && state.bacBets.TIEU_HO > 0) winTotal += state.bacBets.TIEU_HO * 23;
+
+        if (winTotal > 0) {
+          creditWalletWin(winTotal);
+          showToast("Sexy Baccarat về " + h.outcome + " • +" + fmtMoney(winTotal));
+        }
+
+        document.getElementById("bacResultBanner").textContent =
+          "Kết quả: " + (h.outcome === "PLAYER" ? "TAY CON (P)" : h.outcome === "BANKER" ? "NHÀ CÁI (B)" : "HÒA (T)") +
+          " (" + h.pPts + " vs " + h.bPts + ")";
+        renderBacUI();
+        if (isOwnerLoggedIn()) renderOwnerOracleModal();
+      }
+
+      function enterBacWaitPhase() {
+        if (!state.bacSettled) settleBaccaratRound();
+        state.bacPhase = "wait4s";
+        state.bacRemainMs = 4000;
+        renderBacUI();
+      }
+
+      function startNewBacRound() {
+        state.bacPhase = "betting";
+        state.bacRemainMs = 15000;
+        state.bacFlipStep = 0;
+        state.bacSettled = false;
+        BAC_DOOR_KEYS.forEach(function (k) {
+          state.bacPendingBets[k] = 0;
+          state.bacBets[k] = 0;
+        });
+        state.bacHand = buildBaccaratHand(state.bacForceMode);
+        document.getElementById("bacResultBanner").textContent = "Chọn cửa cược rồi bấm ✓ XÁC NHẬN CƯỢC";
+        renderBacUI();
+        if (isOwnerLoggedIn()) renderOwnerOracleModal();
+      }
+
+      function renderCardEl(c, faceDown) {
+        var div = document.createElement("div");
+        if (faceDown) {
+          div.className = "playing-card back";
+          div.textContent = "★";
+        } else {
+          div.className = "playing-card" + (c.red ? " red" : "");
+          div.innerHTML = "<span>" + c.rank + "</span><span>" + c.suit + "</span>";
+        }
+        return div;
+      }
+
+      function renderBacUI() {
+        document.getElementById("bacTimerTxt").textContent = (Math.max(0, state.bacRemainMs) / 1000).toFixed(1) + "s";
+        var btnConf = document.getElementById("btnBacConfirm");
+        var pendSum = getBacPendingTotal();
+
+        if (state.bacPhase === "betting") {
+          document.getElementById("bacPhaseTxt").textContent = "Nhận cược (15s)";
+          btnConf.disabled = pendSum <= 0;
+          btnConf.textContent = pendSum > 0
+            ? ("✓ XÁC NHẬN (" + fmtMoney(pendSum) + ")")
+            : "✓ XÁC NHẬN CƯỢC";
+        } else if (state.bacPhase === "flipping") {
+          document.getElementById("bacPhaseTxt").textContent = "Bot Sexy đang lật bài...";
+          btnConf.disabled = true;
+          btnConf.textContent = "Đang lật bài...";
+        } else {
+          document.getElementById("bacPhaseTxt").textContent = "Đợi 4s sang ván mới";
+          btnConf.disabled = true;
+          btnConf.textContent = "Đợi sang ván...";
+        }
+
+        var h = state.bacHand;
+        var pRow = document.getElementById("bacPlayerCards");
+        var bRow = document.getElementById("bacBankerCards");
+        pRow.innerHTML = "";
+        bRow.innerHTML = "";
+
+        if (h) {
+          var showP = state.bacPhase !== "betting" && state.bacFlipStep >= 1;
+          var showB = state.bacPhase !== "betting" && state.bacFlipStep >= 2;
+          var show3rd = state.bacPhase !== "betting" && state.bacFlipStep >= 3;
+
+          h.pCards.forEach(function (c, idx) {
+            var visible = idx < 2 ? showP : show3rd;
+            pRow.appendChild(renderCardEl(c, !visible));
+          });
+          h.bCards.forEach(function (c, idx) {
+            var visible = idx < 2 ? showB : show3rd;
+            bRow.appendChild(renderCardEl(c, !visible));
+          });
+
+          document.getElementById("bacPlayerPts").textContent = state.bacSettled ? (h.pPts + " điểm") : "? điểm";
+          document.getElementById("bacBankerPts").textContent = state.bacSettled ? (h.bPts + " điểm") : "? điểm";
+        }
+
+        ["PLAYER", "TIE", "BANKER"].forEach(function (k) {
+          document.getElementById("bacBet" + k).textContent = "Chốt: " + fmtMoney(state.bacBets[k]);
+          document.getElementById("bacPend" + k).textContent = state.bacPendingBets[k] > 0 ? ("Chờ: +" + fmtMoney(state.bacPendingBets[k])) : "";
+          document.getElementById("bacDoor" + k).classList.toggle("win-glow", state.bacSettled && h && h.outcome === k);
+        });
+        ["TIEU_LONG", "DAI_LONG", "LONG_HO_DAU", "DAI_HO", "TIEU_HO"].forEach(function (k) {
+          document.getElementById("bacBet" + k).textContent = state.bacBets[k] > 0 ? (state.bacBets[k] / 1000) + "K" : "0";
+          document.getElementById("bacPend" + k).textContent = state.bacPendingBets[k] > 0 ? ("+" + (state.bacPendingBets[k] / 1000) + "K") : "";
+          document.getElementById("bacDoor" + k).classList.toggle("win-glow", state.bacSettled && h && h.sideWins[k]);
+        });
+
+        /* Big Road, Sub Roads & Bead Road */
+        var bigRoad = document.getElementById("bacBigRoad");
+        bigRoad.innerHTML = "";
+        var cols = [];
+        var lastNonTie = null;
+        state.bacHistory.forEach(function (item) {
+          if (item.code === "T") {
+            if (cols.length) cols[cols.length - 1].ties++;
+            return;
+          }
+          if (!lastNonTie || lastNonTie !== item.code || cols[cols.length - 1].items.length >= 6) {
+            cols.push({ side: item.code, items: [item.code], ties: 0 });
+            lastNonTie = item.code;
+          } else {
+            cols[cols.length - 1].items.push(item.code);
+          }
+        });
+        cols.slice(-14).forEach(function (col) {
+          for (var r = 0; r < 6; r++) {
+            var cell = document.createElement("div");
+            if (col.items[r]) {
+              cell.className = "road-cell " + col.side;
+              if (r === col.items.length - 1 && col.ties > 0) cell.textContent = String(col.ties);
+            } else {
+              cell.className = "road-cell";
+            }
+            bigRoad.appendChild(cell);
+          }
+        });
+
+        var subBox = document.getElementById("bacSubRoads");
+        subBox.innerHTML = "";
+        cols.slice(-12).forEach(function (c, idx) {
+          var dot = document.createElement("span");
+          dot.className = "sub-dot " + (idx % 2 === 0 ? "R" : "B");
+          subBox.appendChild(dot);
+        });
+
+        var pCnt = 0, bCnt = 0, tCnt = 0;
+        state.bacHistory.forEach(function (x) {
+          if (x.code === "P") pCnt++;
+          else if (x.code === "B") bCnt++;
+          else tCnt++;
+        });
+        document.getElementById("bacRoadCountTxt").textContent = "P: " + pCnt + " • B: " + bCnt + " • T: " + tCnt;
+
+        var strip = document.getElementById("bacBeadStrip");
+        strip.innerHTML = "";
+        state.bacHistory.slice(-22).forEach(function (x) {
+          var b = document.createElement("span");
+          b.className = "bead " + x.code;
+          b.textContent = x.code;
+          strip.appendChild(b);
+        });
+        strip.scrollLeft = strip.scrollWidth;
+      }
+
+      /* =========================================================================
+         10. GAMES 4, 5, 6: XÌ DÁCH, MẬU BINH, TIẾN LÊN (WITH ✓ XÁC NHẬN CƯỢC)
+         ========================================================================= */
+      function buildShuffledDeck() {
+        var deck = [];
+        for (var r = 0; r < 13; r++) {
+          for (var s = 0; s < 4; s++) {
+            deck.push({
+              rankIdx: r,
+              rank: RANKS[r],
+              suit: SUITS[s],
+              suitIdx: s,
+              red: SUITS[s] === "♥" || SUITS[s] === "♦"
+            });
+          }
+        }
+        for (var i = deck.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = deck[i];
+          deck[i] = deck[j];
+          deck[j] = tmp;
+        }
+        return deck;
+      }
+
+      /* XÌ DÁCH */
+      function calcXidachScore(cards) {
+        var total = 0, aces = 0;
+        cards.forEach(function (c) {
+          if (c.rankIdx === 0) { aces++; total += 11; }
+          else if (c.rankIdx >= 9) total += 10;
+          else total += (c.rankIdx + 1);
+        });
+        while (total > 21 && aces > 0) { total -= 10; aces--; }
+        return total;
+      }
+
+      window.confirmXidachStake = function () {
+        if (state.xdActive) {
+          showToast("Ván Xì Dách đang diễn ra!");
+          return;
+        }
+        var p = getCurrentProfile();
+        if (!p || p.locked) return;
+        if (p.bal < state.selectedChip) {
+          showToast("Số dư ví không đủ để xác nhận mức cược này!");
+          return;
+        }
+        state.xdConfirmedBet = state.selectedChip;
+        updateCardStakePreviews();
+        document.getElementById("xdStatusTxt").textContent =
+          "Đã xác nhận cược " + fmtMoney(state.xdConfirmedBet) + " — Bấm Chia Bài để bắt đầu!";
+        showToast("✓ Đã xác nhận cược Xì Dách: " + fmtMoney(state.xdConfirmedBet));
+      };
+
+      window.startXidachRound = function () {
+        if (state.xdActive) return;
+        if (state.xdConfirmedBet <= 0) {
+          showToast("Bấm ✓ XÁC NHẬN CƯỢC trước khi Chia Bài!");
+          return;
+        }
+        var bet = state.xdConfirmedBet;
+        if (!spendWalletForBet(bet, "xidach")) return;
+        state.xdConfirmedBet = 0;
+        updateCardStakePreviews();
+        state.xdActive = true;
+        state.xdBet = bet;
+        state.xdDeck = buildShuffledDeck();
+        state.xdPlayer = [state.xdDeck.pop(), state.xdDeck.pop()];
+        state.xdDealer = [state.xdDeck.pop(), state.xdDeck.pop()];
+        document.getElementById("btnXdConfirm").disabled = true;
+        document.getElementById("btnXdDeal").disabled = true;
+        document.getElementById("btnXdHit").disabled = false;
+        document.getElementById("btnXdStand").disabled = false;
+        document.getElementById("xdStatusTxt").textContent = "Đang chơi Xì Dách • Cược: " + fmtMoney(bet);
+        renderXidachUI(false);
+      };
+
+      window.hitXidachCard = function () {
+        if (!state.xdActive) return;
+        state.xdPlayer.push(state.xdDeck.pop());
+        var pts = calcXidachScore(state.xdPlayer);
+        renderXidachUI(false);
+        if (pts > 21 || state.xdPlayer.length >= 5) {
+          window.standXidachRound();
+        }
+      };
+
+      window.standXidachRound = function () {
+        if (!state.xdActive) return;
+        state.xdActive = false;
+        document.getElementById("btnXdConfirm").disabled = false;
+        document.getElementById("btnXdDeal").disabled = false;
+        document.getElementById("btnXdHit").disabled = true;
+        document.getElementById("btnXdStand").disabled = true;
+
+        var pPts = calcXidachScore(state.xdPlayer);
+        while (calcXidachScore(state.xdDealer) < 17 && state.xdDealer.length < 5) {
+          state.xdDealer.push(state.xdDeck.pop());
+        }
+        var dPts = calcXidachScore(state.xdDealer);
+        var pNguLinh = state.xdPlayer.length === 5 && pPts <= 21;
+
+        var msg = "";
+        if (pPts > 21) {
+          msg = "Quắc (" + pPts + " điểm) • Thua " + fmtMoney(state.xdBet);
+        } else if (pNguLinh || dPts > 21 || pPts > dPts) {
+          var payout = state.xdBet * 2;
+          creditWalletWin(payout);
+          msg = (pNguLinh ? "NGŨ LINH! " : "THẮNG! ") + pPts + " vs " + dPts + " • +" + fmtMoney(payout);
+        } else if (pPts === dPts) {
+          creditWalletWin(state.xdBet);
+          msg = "HÒA (" + pPts + " điểm) • Hoàn tiền " + fmtMoney(state.xdBet);
+        } else {
+          msg = "THUA Nhà Cái (" + pPts + " vs " + dPts + ")";
+        }
+        document.getElementById("xdStatusTxt").textContent = msg;
+        renderXidachUI(true);
+      };
+
+      function renderXidachUI(showDealer) {
+        var dWrap = document.getElementById("xdDealerCards");
+        var pWrap = document.getElementById("xdPlayerCards");
+        dWrap.innerHTML = "";
+        pWrap.innerHTML = "";
+        state.xdDealer.forEach(function (c, i) {
+          dWrap.appendChild(renderCardEl(c, !showDealer && i > 0));
+        });
+        state.xdPlayer.forEach(function (c) {
+          pWrap.appendChild(renderCardEl(c, false));
+        });
+        document.getElementById("xdPlayerPts").textContent = calcXidachScore(state.xdPlayer) + " điểm";
+        document.getElementById("xdDealerPts").textContent = showDealer ? (calcXidachScore(state.xdDealer) + " điểm") : "? điểm";
+      }
+
+      /* MẬU BINH */
+      function evalBranchScore(cards) {
+        var counts = {};
+        var sum = 0;
+        cards.forEach(function (c) {
+          var v = c.rankIdx === 0 ? 14 : c.rankIdx + 1;
+          sum += v;
+          counts[v] = (counts[v] || 0) + 1;
+        });
+        var freqs = Object.values(counts).sort(function (a, b) { return b - a; });
+        if (freqs[0] === 4) return { score: 700 + sum, label: "Tứ Quý" };
+        if (freqs[0] === 3 && freqs[1] === 2) return { score: 600 + sum, label: "Cù Lũ" };
+        if (freqs[0] === 3) return { score: 300 + sum, label: "Sám Cô" };
+        if (freqs[0] === 2 && freqs[1] === 2) return { score: 200 + sum, label: "Thú" };
+        if (freqs[0] === 2) return { score: 100 + sum, label: "Đôi" };
+        return { score: sum, label: "Mậu Thầu" };
+      }
+
+      window.confirmMaubinhStake = function () {
+        if (state.mbActive) {
+          showToast("Ván Mậu Binh đang diễn ra!");
+          return;
+        }
+        var p = getCurrentProfile();
+        if (!p || p.locked) return;
+        if (p.bal < state.selectedChip) {
+          showToast("Số dư ví không đủ để xác nhận mức cược này!");
+          return;
+        }
+        state.mbConfirmedBet = state.selectedChip;
+        updateCardStakePreviews();
+        document.getElementById("mbStatusTxt").textContent =
+          "Đã xác nhận cược " + fmtMoney(state.mbConfirmedBet) + " — Bấm Chia 13 Lá!";
+        showToast("✓ Đã xác nhận cược Mậu Binh: " + fmtMoney(state.mbConfirmedBet));
+      };
+
+      window.dealMaubinhRound = function () {
+        if (state.mbActive) return;
+        if (state.mbConfirmedBet <= 0) {
+          showToast("Bấm ✓ XÁC NHẬN CƯỢC trước khi Chia 13 Lá!");
+          return;
+        }
+        var bet = state.mbConfirmedBet;
+        if (!spendWalletForBet(bet, "maubinh")) return;
+        state.mbConfirmedBet = 0;
+        updateCardStakePreviews();
+        state.mbActive = true;
+        state.mbBet = bet;
+        state.mbCards = buildShuffledDeck().slice(0, 13);
+        document.getElementById("btnMbConfirm").disabled = true;
+        document.getElementById("btnMbDeal").disabled = true;
+        document.getElementById("btnMbSwap").disabled = false;
+        document.getElementById("btnMbCompare").disabled = false;
+        document.getElementById("mbStatusTxt").textContent = "Đã chia 13 lá • Cược: " + fmtMoney(bet);
+        renderMaubinhUI();
+      };
+
+      window.swapMaubinhBranches = function () {
+        if (!state.mbActive) return;
+        var c1 = state.mbCards.slice(0, 5);
+        var c2 = state.mbCards.slice(5, 10);
+        var c3 = state.mbCards.slice(10, 13);
+        state.mbCards = c2.concat(c1, c3);
+        renderMaubinhUI();
+      };
+
+      window.compareMaubinhRound = function () {
+        if (!state.mbActive) return;
+        state.mbActive = false;
+        document.getElementById("btnMbConfirm").disabled = false;
+        document.getElementById("btnMbDeal").disabled = false;
+        document.getElementById("btnMbSwap").disabled = true;
+        document.getElementById("btnMbCompare").disabled = true;
+
+        var b1 = evalBranchScore(state.mbCards.slice(0, 5));
+        var b2 = evalBranchScore(state.mbCards.slice(5, 10));
+        var b3 = evalBranchScore(state.mbCards.slice(10, 13));
+
+        if (b1.score < b2.score || b2.score < b3.score) {
+          document.getElementById("mbStatusTxt").textContent = "BINH LỦNG! Thua " + fmtMoney(state.mbBet);
+          return;
+        }
+
+        var botDeck = buildShuffledDeck().slice(0, 13);
+        var d1 = evalBranchScore(botDeck.slice(0, 5));
+        var d2 = evalBranchScore(botDeck.slice(5, 10));
+        var d3 = evalBranchScore(botDeck.slice(10, 13));
+
+        var netChi = (b1.score >= d1.score ? 1 : -1) + (b2.score >= d2.score ? 1 : -1) + (b3.score >= d3.score ? 1 : -1);
+        if (netChi > 0) {
+          var winAmt = state.mbBet + Math.floor(state.mbBet * (netChi / 3));
+          creditWalletWin(winAmt);
+          document.getElementById("mbStatusTxt").textContent = "THẮNG " + netChi + " CHI! Nhận +" + fmtMoney(winAmt);
+        } else {
+          document.getElementById("mbStatusTxt").textContent = "THUA " + Math.abs(netChi) + " CHI • Mất " + fmtMoney(state.mbBet);
+        }
+      };
+
+      function renderMaubinhUI() {
+        var c1 = state.mbCards.slice(0, 5);
+        var c2 = state.mbCards.slice(5, 10);
+        var c3 = state.mbCards.slice(10, 13);
+        ["mbChi1Cards", "mbChi2Cards", "mbChi3Cards"].forEach(function (id, idx) {
+          var wrap = document.getElementById(id);
+          wrap.innerHTML = "";
+          var arr = idx === 0 ? c1 : (idx === 1 ? c2 : c3);
+          arr.forEach(function (c) { wrap.appendChild(renderCardEl(c, false)); });
+        });
+        document.getElementById("mbChi1Rank").textContent = evalBranchScore(c1).label;
+        document.getElementById("mbChi2Rank").textContent = evalBranchScore(c2).label;
+        document.getElementById("mbChi3Rank").textContent = evalBranchScore(c3).label;
+      }
+
+      /* TIẾN LÊN */
+      function tlCardPower(c) {
+        var order = c.rankIdx === 1 ? 15 : (c.rankIdx === 0 ? 14 : c.rankIdx + 1);
+        return order * 10 + (3 - c.suitIdx);
+      }
+
+      window.confirmTienlenStake = function () {
+        if (state.tlActive) {
+          showToast("Ván Tiến Lên đang diễn ra!");
+          return;
+        }
+        var p = getCurrentProfile();
+        if (!p || p.locked) return;
+        if (p.bal < state.selectedChip) {
+          showToast("Số dư ví không đủ để xác nhận mức cược này!");
+          return;
+        }
+        state.tlConfirmedBet = state.selectedChip;
+        updateCardStakePreviews();
+        document.getElementById("tlStatusTxt").textContent =
+          "Đã xác nhận cược " + fmtMoney(state.tlConfirmedBet) + " — Bấm Ván Mới!";
+        showToast("✓ Đã xác nhận cược Tiến Lên: " + fmtMoney(state.tlConfirmedBet));
+      };
+
+      window.startTienlenRound = function () {
+        if (state.tlActive) return;
+        if (state.tlConfirmedBet <= 0) {
+          showToast("Bấm ✓ XÁC NHẬN CƯỢC trước khi bấm Ván Mới!");
+          return;
+        }
+        var bet = state.tlConfirmedBet;
+        if (!spendWalletForBet(bet, "tienlen")) return;
+        state.tlConfirmedBet = 0;
+        updateCardStakePreviews();
+        state.tlActive = true;
+        state.tlBet = bet;
+        var deck = buildShuffledDeck();
+        state.tlPlayer = deck.slice(0, 13).sort(function (a, b) { return tlCardPower(a) - tlCardPower(b); });
+        state.tlBots = [
+          deck.slice(13, 26).sort(function (a, b) { return tlCardPower(a) - tlCardPower(b); }),
+          deck.slice(26, 39).sort(function (a, b) { return tlCardPower(a) - tlCardPower(b); }),
+          deck.slice(39, 52).sort(function (a, b) { return tlCardPower(a) - tlCardPower(b); })
+        ];
+        state.tlTable = [];
+        state.tlTableOwner = -1;
+        state.tlSelectedIdx = [];
+
+        document.getElementById("btnTlConfirm").disabled = true;
+        document.getElementById("btnTlNew").disabled = true;
+        document.getElementById("btnTlAuto").disabled = false;
+        document.getElementById("btnTlPass").disabled = false;
+        document.getElementById("btnTlPlay").disabled = false;
+        document.getElementById("tlStatusTxt").textContent = "Lượt của bạn! Cược bàn: " + fmtMoney(bet);
+        renderTienlenUI();
+      };
+
+      window.autoSelectTienlenMove = function () {
+        if (!state.tlActive || !state.tlPlayer.length) return;
+        state.tlSelectedIdx = [];
+        var reqLen = state.tlTable.length || 1;
+        var minPow = state.tlTable.length ? tlCardPower(state.tlTable[state.tlTable.length - 1]) : 0;
+
+        if (reqLen === 1) {
+          for (var i = 0; i < state.tlPlayer.length; i++) {
+            if (tlCardPower(state.tlPlayer[i]) > minPow) {
+              state.tlSelectedIdx = [i];
+              break;
+            }
+          }
+        } else {
+          for (var j = 0; j <= state.tlPlayer.length - reqLen; j++) {
+            var slice = state.tlPlayer.slice(j, j + reqLen);
+            var sameRank = slice.every(function (c) { return c.rankIdx === slice[0].rankIdx; });
+            if (sameRank && tlCardPower(slice[slice.length - 1]) > minPow) {
+              for (var k = 0; k < reqLen; k++) state.tlSelectedIdx.push(j + k);
+              break;
+            }
+          }
+        }
+        renderTienlenUI();
+      };
+
+      window.playSelectedTienlenCards = function () {
+        if (!state.tlActive) return;
+        if (!state.tlSelectedIdx.length) {
+          showToast("Chạm chọn lá bài trên tay trước khi đánh!");
+          return;
+        }
+        var chosen = state.tlSelectedIdx.sort(function (a, b) { return a - b; }).map(function (idx) { return state.tlPlayer[idx]; });
+        var sameRank = chosen.every(function (c) { return c.rankIdx === chosen[0].rankIdx; });
+        if (!sameRank) {
+          showToast("Chỉ chọn 1 lá lẻ hoặc bộ đôi/sám/tứ quý cùng số!");
+          return;
+        }
+        if (state.tlTable.length > 0 && state.tlTableOwner !== 0) {
+          if (chosen.length !== state.tlTable.length ||
+              tlCardPower(chosen[chosen.length - 1]) <= tlCardPower(state.tlTable[state.tlTable.length - 1])) {
+            showToast("Bài đánh phải cùng số lượng và lớn hơn bài trên bàn!");
+            return;
+          }
+        }
+
+        state.tlTable = chosen;
+        state.tlTableOwner = 0;
+        state.tlPlayer = state.tlPlayer.filter(function (_, idx) { return state.tlSelectedIdx.indexOf(idx) === -1; });
+        state.tlSelectedIdx = [];
+
+        if (state.tlPlayer.length === 0) {
+          finishTienlenMatch(true, "BẠN VỀ NHẤT TIẾN LÊN!");
+          return;
+        }
+        runBotsTienlenTurns();
+      };
+
+      window.passTienlenTurn = function () {
+        if (!state.tlActive) return;
+        if (!state.tlTable.length || state.tlTableOwner === 0) {
+          showToast("Bạn đang cầm cái, hãy đánh ra ít nhất 1 lá!");
+          return;
+        }
+        state.tlSelectedIdx = [];
+        runBotsTienlenTurns();
+      };
+
+      function runBotsTienlenTurns() {
+        for (var b = 0; b < 3; b++) {
+          var botId = b + 1;
+          var hand = state.tlBots[b];
+          if (state.tlTableOwner === botId) {
+            state.tlTable = [];
+            state.tlTableOwner = -1;
+          }
+          var reqLen = state.tlTable.length || 1;
+          var minPow = state.tlTable.length ? tlCardPower(state.tlTable[state.tlTable.length - 1]) : 0;
+          var played = false;
+          if (reqLen === 1) {
+            for (var i = 0; i < hand.length; i++) {
+              if (tlCardPower(hand[i]) > minPow) {
+                state.tlTable = [hand[i]];
+                state.tlTableOwner = botId;
+                hand.splice(i, 1);
+                played = true;
+                break;
+              }
+            }
+          }
+          if (played && hand.length === 0) {
+            finishTienlenMatch(false, "Bot " + botId + " về nhất! Bạn thua " + fmtMoney(state.tlBet));
+            return;
+          }
+        }
+        if (state.tlTableOwner === 0) {
+          state.tlTable = [];
+          state.tlTableOwner = -1;
+          document.getElementById("tlStatusTxt").textContent = "Cả 3 Bot bỏ lượt — Bạn được đánh tự do!";
+        } else {
+          document.getElementById("tlStatusTxt").textContent = "Tới lượt bạn chặn bài hoặc Bỏ Lượt.";
+        }
+        renderTienlenUI();
+      }
+
+      function finishTienlenMatch(playerWon, msg) {
+        state.tlActive = false;
+        document.getElementById("btnTlConfirm").disabled = false;
+        document.getElementById("btnTlNew").disabled = false;
+        document.getElementById("btnTlAuto").disabled = true;
+        document.getElementById("btnTlPass").disabled = true;
+        document.getElementById("btnTlPlay").disabled = true;
+        if (playerWon) {
+          var winAmt = state.tlBet * 3;
+          creditWalletWin(winAmt);
+          msg += " Nhận +" + fmtMoney(winAmt);
+        }
+        document.getElementById("tlStatusTxt").textContent = msg;
+        renderTienlenUI();
+      }
+
+      function renderTienlenUI() {
+        document.getElementById("tlBot1Cnt").textContent = "Bot 1: " + state.tlBots[0].length + " lá";
+        document.getElementById("tlBot2Cnt").textContent = "Bot 2: " + state.tlBots[1].length + " lá";
+        document.getElementById("tlBot3Cnt").textContent = "Bot 3: " + state.tlBots[2].length + " lá";
+
+        var tWrap = document.getElementById("tlTableCards");
+        tWrap.innerHTML = "";
+        state.tlTable.forEach(function (c) { tWrap.appendChild(renderCardEl(c, false)); });
+
+        var pWrap = document.getElementById("tlPlayerCards");
+        pWrap.innerHTML = "";
+        state.tlPlayer.forEach(function (c, idx) {
+          var el = document.createElement("div");
+          var sel = state.tlSelectedIdx.indexOf(idx) !== -1;
+          el.className = "tl-card" + (c.red ? " red" : "") + (sel ? " selected" : "");
+          el.innerHTML = "<span>" + c.rank + "</span><span>" + c.suit + "</span>";
+          el.onclick = function () {
+            if (!state.tlActive) return;
+            var pos = state.tlSelectedIdx.indexOf(idx);
+            if (pos === -1) state.tlSelectedIdx.push(idx);
+            else state.tlSelectedIdx.splice(pos, 1);
+            renderTienlenUI();
+          };
+          pWrap.appendChild(el);
+        });
+      }
+
+      /* =========================================================================
+         11. OWNER-ONLY LIVE SOI CẦU CONTROLLER (admin / 1234 ONLY)
+         ========================================================================= */
+      window.openOwnerOracle = function (preferTab) {
+        if (!isOwnerLoggedIn()) {
+          showToast("Chức năng Soi Cầu chỉ dành riêng cho tài khoản chủ phòng!");
+          return;
+        }
+        if (preferTab === "tx" || preferTab === "bac") {
+          state.oracleTab = preferTab;
+        }
+        window.switchOracleTab(state.oracleTab);
+        renderOwnerOracleModal();
+        document.getElementById("modalOracle").classList.add("open");
+      };
+
+      window.switchOracleTab = function (tab) {
+        state.oracleTab = tab === "bac" ? "bac" : "tx";
+        document.getElementById("oracleTabTx").classList.toggle("active", state.oracleTab === "tx");
+        document.getElementById("oracleTabBac").classList.toggle("active", state.oracleTab === "bac");
+        document.getElementById("oraclePanelTx").classList.toggle("active", state.oracleTab === "tx");
+        document.getElementById("oraclePanelBac").classList.toggle("active", state.oracleTab === "bac");
+        renderOwnerOracleModal();
+      };
+
+      window.setTxOwnerForce = function (mode) {
+        if (!isOwnerLoggedIn()) return;
+        state.txForceMode = mode;
+        if (state.txPhase === "shake") {
+          state.txNextDice = rollTxDice(mode);
+          renderTxUI();
+        }
+        renderOwnerOracleModal();
+        showToast("Đã đặt chế độ Tài Xỉu: " + mode);
+      };
+
+      window.setBacOwnerForce = function (mode) {
+        if (!isOwnerLoggedIn()) return;
+        state.bacForceMode = mode;
+        if (state.bacPhase === "betting") {
+          state.bacHand = buildBaccaratHand(mode);
+          renderBacUI();
+        }
+        renderOwnerOracleModal();
+        showToast("Đã đặt chế độ Sexy Baccarat: " + mode);
+      };
+
+      function renderOwnerOracleModal() {
+        if (!isOwnerLoggedIn()) return;
+
+        /* 1. Tài Xỉu Live Reading */
+        var txInfo = classifyTxDice(state.txNextDice);
+        var txLabel = txInfo.outcome === "TAI" ? "VỀ TÀI" : (txInfo.outcome === "XIU" ? "VỀ XỈU" : "VỀ BÃO");
+        document.getElementById("oracleTxPhaseBadge").textContent =
+          (state.txPhase === "shake" ? "Đang lắc 15s" : state.txPhase === "squeeze" ? "Đang nặn 10s" : "Sang phiên 3s") +
+          " (" + (Math.max(0, state.txRemainMs) / 1000).toFixed(1) + "s)";
+        document.getElementById("oracleTxVerdict").textContent =
+          "Phiên này: " + txLabel + " (" + txInfo.sum + " điểm)";
+        document.getElementById("oracleTxDiceDetail").textContent =
+          "3 viên xúc xắc đã tạo sẵn: [ " + txInfo.dice.join(" • ") + " ]";
+
+        var txTaiCnt = 0, txXiuCnt = 0, txBaoCnt = 0;
+        state.txHistory.forEach(function (x) {
+          if (x.outcome === "TAI") txTaiCnt++;
+          else if (x.outcome === "XIU") txXiuCnt++;
+          else txBaoCnt++;
+        });
+        document.getElementById("oracleTxTrendDetail").textContent =
+          "Thống kê cầu thật: Tài " + txTaiCnt + " • Xỉu " + txXiuCnt + " • Bão " + txBaoCnt;
+
+        ["AUTO", "TAI", "XIU", "BAO"].forEach(function (m) {
+          var id = m === "AUTO" ? "forceTxAuto" : ("forceTx" + m);
+          var btn = document.getElementById(id);
+          if (btn) btn.classList.toggle("active", state.txForceMode === m);
+        });
+
+        var txBeads = document.getElementById("oracleTxHistoryBeads");
+        txBeads.innerHTML = "";
+        state.txHistory.slice(-20).forEach(function (h) {
+          var s = document.createElement("span");
+          s.className = "bead " + h.outcome;
+          s.textContent = h.outcome === "TAI" ? "T·" + h.sum : (h.outcome === "XIU" ? "X·" + h.sum : "BÃO");
+          txBeads.appendChild(s);
+        });
+
+        /* 2. Sexy Baccarat Live Reading */
+        var bh = state.bacHand;
+        document.getElementById("oracleBacPhaseBadge").textContent =
+          (state.bacPhase === "betting" ? "Nhận cược 15s" : state.bacPhase === "flipping" ? "Bot lật bài" : "Đợi 4s") +
+          " (" + (Math.max(0, state.bacRemainMs) / 1000).toFixed(1) + "s)";
+
+        if (bh) {
+          var bacTitle = bh.outcome === "PLAYER" ? "VỀ TAY CON (PLAYER)" :
+                         bh.outcome === "BANKER" ? "VỀ NHÀ CÁI (BANKER)" : "VỀ HÒA (TIE)";
+          document.getElementById("oracleBacVerdict").textContent =
+            "Ván này: " + bacTitle + " (" + bh.pPts + " vs " + bh.bPts + ")";
+
+          var pStr = bh.pCards.map(function (c) { return c.rank + c.suit; }).join(" ");
+          var bStr = bh.bCards.map(function (c) { return c.rank + c.suit; }).join(" ");
+          document.getElementById("oracleBacCardsDetail").textContent =
+            "Bài chia sẵn — Tay Con: [" + pStr + "] (" + bh.pPts + "đ) | Nhà Cái: [" + bStr + "] (" + bh.bPts + "đ)";
+
+          var activeSides = [];
+          if (bh.sideWins.TIEU_LONG) activeSides.push("Tiểu Long 1:15");
+          if (bh.sideWins.DAI_LONG) activeSides.push("Đại Long 1:30");
+          if (bh.sideWins.LONG_HO_DAU) activeSides.push("Long Hổ Đấu 1:100");
+          if (bh.sideWins.DAI_HO) activeSides.push("Đại Hổ 1:50");
+          if (bh.sideWins.TIEU_HO) activeSides.push("Tiểu Hổ 1:22");
+          document.getElementById("oracleBacSideDetail").textContent =
+            "Cửa phụ Rồng/Hổ nổ ván này: " + (activeSides.length ? activeSides.join(", ") : "Không nổ cửa phụ");
+        }
+
+        var bP = 0, bB = 0, bT = 0;
+        state.bacHistory.forEach(function (x) {
+          if (x.code === "P") bP++;
+          else if (x.code === "B") bB++;
+          else bT++;
+        });
+        document.getElementById("oracleBacTrendDetail").textContent =
+          "Thống kê cầu thật: Player " + bP + " • Banker " + bB + " • Tie " + bT;
+
+        ["AUTO", "PLAYER", "BANKER", "TIE"].forEach(function (m) {
+          var id = m === "AUTO" ? "forceBacAuto" : ("forceBac" + m);
+          var btn = document.getElementById(id);
+          if (btn) btn.classList.toggle("active", state.bacForceMode === m);
+        });
+
+        var bacBeads = document.getElementById("oracleBacHistoryBeads");
+        bacBeads.innerHTML = "";
+        state.bacHistory.slice(-20).forEach(function (x) {
+          var s = document.createElement("span");
+          s.className = "bead " + x.code;
+          s.textContent = x.code;
+          bacBeads.appendChild(s);
+        });
+      }
+
+      /* =========================================================================
+         12. MASTER GAME CLOCK LOOP (200MS TICK)
+         ========================================================================= */
+      setInterval(function () {
+        /* Tài Xỉu 15s -> 10s -> 3s */
+        state.txRemainMs -= 200;
+        if (state.txRemainMs <= 0) {
+          if (state.txPhase === "shake") enterTxSqueezePhase();
+          else if (state.txPhase === "squeeze") enterTxTransitPhase();
+          else startNewTxRound();
+        } else {
+          document.getElementById("txTimerTxt").textContent = (state.txRemainMs / 1000).toFixed(1) + "s";
+        }
+
+        /* Bầu Cua 15s -> 10s -> 3s */
+        state.bcRemainMs -= 200;
+        if (state.bcRemainMs <= 0) {
+          if (state.bcPhase === "shake") enterBcSqueezePhase();
+          else if (state.bcPhase === "squeeze") enterBcTransitPhase();
+          else startNewBcRound();
+        } else {
+          document.getElementById("bcTimerTxt").textContent = (state.bcRemainMs / 1000).toFixed(1) + "s";
+        }
+
+        /* Sexy Baccarat 15s -> Bot Flip -> 4s */
+        state.bacRemainMs -= 200;
+        if (state.bacRemainMs <= 0) {
+          if (state.bacPhase === "betting") startBacBotFlipSequence();
+          else if (state.bacPhase === "flipping") enterBacWaitPhase();
+          else startNewBacRound();
+        } else {
+          document.getElementById("bacTimerTxt").textContent = (state.bacRemainMs / 1000).toFixed(1) + "s";
+        }
+
+        if (isOwnerLoggedIn() && document.getElementById("modalOracle").classList.contains("open")) {
+          renderOwnerOracleModal();
+        }
+      }, 200);
+
+      /* =========================================================================
+         13. INITIALIZATION & EXPLICIT EVENT BINDING
+         ========================================================================= */
+      function initApp() {
+        var authForm = document.getElementById("authForm");
+        var tabLogin = document.getElementById("authTabLogin");
+        var tabReg = document.getElementById("authTabReg");
+
+        if (authForm) {
+          authForm.addEventListener("submit", handleAuthSubmit);
+        }
+        if (tabLogin) {
+          tabLogin.addEventListener("click", function () { switchAuthTab("login"); });
+        }
+        if (tabReg) {
+          tabReg.addEventListener("click", function () { switchAuthTab("reg"); });
+        }
+
+        var depInp = document.getElementById("depCodeInp");
+        if (depInp) {
+          depInp.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              window.verifyAndCompleteDeposit();
+            }
+          });
+        }
+
+        var bacChatInp = document.getElementById("bacChatInp");
+        if (bacChatInp) {
+          bacChatInp.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              window.sendBacChat();
+            }
+          });
+        }
+
+        buildBcDoors();
+        renderAllChipRacks();
+        initTxHistorySeed();
+        initBacHistorySeed();
+        startNewTxRound();
+        startNewBcRound();
+        startNewBacRound();
+
+        var db = readDb();
+        saveDb(db);
+        renderSavedAccountsList();
+
+        var savedUser = (safeGetItem(CUR_KEY) || "").trim().toLowerCase();
+        if (savedUser && Object.prototype.hasOwnProperty.call(db, savedUser)) {
+          enterLoggedInSession(savedUser);
+        } else {
+          state.currentUser = null;
+          syncAllWalletAndVipUI();
+          showScreen("screenAuth");
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initApp);
+      } else {
+        initApp();
+      }
+    })();
+  </script>
+</body>
+</html>
